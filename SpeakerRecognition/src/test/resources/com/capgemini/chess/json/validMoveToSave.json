@@ -1,0 +1,8 @@
+{
+  "gameId" : 1,
+  "playerId" : 3,
+  "fromX": 7,
+  "toX": 7,
+  "fromY": 6,
+  "toY" : 5
+}

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<import resource="test-configuration.xml" />
+
+	<bean id="challengeRestService" class="com.capgemini.chess.service.rest.ChallengeRestService" />
+	<bean class="org.mockito.Mockito" factory-method="mock">
+		<constructor-arg value="com.capgemini.chess.service.ChallengeService" />
+	</bean>
+	
+	<bean class="org.mockito.Mockito" factory-method="mock">
+		<constructor-arg value="com.capgemini.chess.service.UserService" />
+	</bean>
+	
+	<bean class="org.mockito.Mockito" factory-method="mock">
+		<constructor-arg value="com.capgemini.chess.service.facade.ChallengeFacadeService" />
+	</bean>
+	
+	
+	
+	
+	
+	<!-- 
+	<bean id = "userProfileDao" class="com.capgemini.chess.dao.impl.UserProfileDaoImpl"/>
+	
+	<bean id="userService" class="com.capgemini.chess.service.impl.UserServiceImpl" >
+		<property name="userProfileDao" ref = "com.capgemini.chess.dao.UserProfileDao"/>
+	</bean>
+ 	-->
+	
+</beans> 
