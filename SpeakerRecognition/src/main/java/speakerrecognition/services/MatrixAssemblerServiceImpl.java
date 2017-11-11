@@ -7,10 +7,10 @@ import org.springframework.stereotype.Service;
 import speakerrecognition.entities.CovarEntity;
 import speakerrecognition.entities.MeanEntity;
 import speakerrecognition.entities.WeightEntity;
-import speakerrecognition.services.interfaces.CreaterMatrixService;
+import speakerrecognition.services.interfaces.MatrixAssemblerService;
 
 @Service
-public class CreaterMatrixServiceImpl implements CreaterMatrixService {
+public class MatrixAssemblerServiceImpl implements MatrixAssemblerService {
 
 	@Override
 	public double[][] createCovarMatrix(List<CovarEntity> covar) {

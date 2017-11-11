@@ -4,11 +4,24 @@ import java.util.List;
 
 public class SpeakerModel {
 
-	private double[][] means = null;
-	private double[][] covars = null;
-	private double[] weights = null;
-	private String name = null;
-	private List<String> test_nums;
+	private double[][] means;
+	private double[][] covars;
+	private double[] weights;
+	private String name;
+	private List<String> testNums;
+
+	public SpeakerModel() {
+		super();
+	}
+
+	public SpeakerModel(double[][] means, double[][] covars, double[] weights, String name, List<String> testNums) {
+		super();
+		this.means = means;
+		this.covars = covars;
+		this.weights = weights;
+		this.name = name;
+		this.testNums = testNums;
+	}
 
 	public double[][] getMeans() {
 		return means;
@@ -43,11 +56,11 @@ public class SpeakerModel {
 	}
 
 	public List<String> getTest_nums() {
-		return test_nums;
+		return testNums;
 	}
 
-	public void setTest_nums(List<String> test_nums) {
-		this.test_nums = test_nums;
+	public void setTest_nums(List<String> testNums) {
+		this.testNums = testNums;
 	}
 
 }

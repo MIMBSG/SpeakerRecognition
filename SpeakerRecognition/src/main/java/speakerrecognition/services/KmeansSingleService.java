@@ -8,13 +8,13 @@ import speakerrecognition.pojos.LabelsInertiaDistances;
 import speakerrecognition.pojos.LabelsInertiaDistancesCenters;
 import speakerrecognition.services.CentersDenseService;
 import speakerrecognition.services.InitCentroidsService;
-import speakerrecognition.services.LabelsInertiaService;
+import speakerrecognition.services.LabelsInertiaCalculatorService;
 
 @Service
 public class KmeansSingleService {
 
 	@Autowired
-	private LabelsInertiaService labelsInteria;
+	private LabelsInertiaCalculatorService labelsInteria;
 	@Autowired
 	private MatrixesService matrixesService;
 	@Autowired
@@ -24,7 +24,7 @@ public class KmeansSingleService {
 
 	public LabelsInertiaDistancesCenters kmeansSingle(double[][] data, int nClusters, double[] xSqNorms, int maxIter,
 			double tol) throws MatrixesServiceException {
-		double[][] centers = initCentroids.InitCentroids(data, nClusters, xSqNorms);
+		double[][] centers = initCentroids.initCentroids(data, nClusters, xSqNorms);
 		double[] distances = new double[data.length];
 		double[] bestLabels = null;
 		double[][] bestCenters = null;
@@ -36,7 +36,7 @@ public class KmeansSingleService {
 					distances);
 			distances = labelsInertiaDistances.getDistances();
 
-			centers = centersDense.CentersDense(data, labelsInertiaDistances.getDistances(), nClusters, distances);
+			centers = centersDense.centersDense(data, labelsInertiaDistances.getDistances(), nClusters, distances);
 
 			if (labelsInertiaDistances.getInertia() < bestInertia) {
 				bestLabels = labelsInertiaDistances.getLabels().clone();
@@ -49,10 +49,8 @@ public class KmeansSingleService {
 				break;
 			}
 		}
-		LabelsInertiaDistancesCenters result = new LabelsInertiaDistancesCenters(bestInertia, distances, bestLabels,
-				bestCenters);
 
-		return result;
+		return new LabelsInertiaDistancesCenters(bestInertia, distances, bestLabels, bestCenters);
 	}
 
 }

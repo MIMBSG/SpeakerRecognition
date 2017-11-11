@@ -12,7 +12,7 @@ import speakerrecognition.pojos.LabelsInertiaDistances;
 
 public class KmeansServicesTest {
 
-	private LabelsInertiaService labelsInertia = new LabelsInertiaService();
+	private LabelsInertiaCalculatorService labelsInertia = new LabelsInertiaCalculatorService();
 	private CentersDenseService centDens = new CentersDenseService();
 
 	@Test(expected = MatrixesServiceException.class)
@@ -52,7 +52,7 @@ public class KmeansServicesTest {
 		double[] distances = { 0.0, 1.0, 3.0, 5.0 };
 		// when
 		double[][] expectedResult = { { 1.0, 20.0, 5.0, 6.0 }, { 1.3, 22.0, 5.5, 7.0 }, { 1.0, 20.0, 5.0, 6.0 } };
-		double[][] returnedResult = centDens.CentersDense(data, labels, nClusters, distances);
+		double[][] returnedResult = centDens.centersDense(data, labels, nClusters, distances);
 		// then
 		Assert.assertEquals(expectedResult[0][0], returnedResult[0][0], 0.01);
 	}
@@ -66,7 +66,7 @@ public class KmeansServicesTest {
 		double[] distances = { 0.0, 1.0, 3.0, 60.0 };
 		// when
 		double[][] expectedResult = { { 1.0, 20.0, 5.0, 6.0 }, { 1.3, 22.0, 5.5, 7.0 }, { 1.0, 20.0, 5.0, 6.0 } };
-		double[][] returnedResult = centDens.CentersDense(data, labels, nClusters, distances);
+		double[][] returnedResult = centDens.centersDense(data, labels, nClusters, distances);
 		// then
 		// Assert.assertEquals(expectedResult[0][0], returnedResult[0][0],
 		// 0.01);

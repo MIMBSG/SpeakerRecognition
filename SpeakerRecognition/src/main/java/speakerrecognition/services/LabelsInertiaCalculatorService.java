@@ -7,7 +7,7 @@ import speakerrecognition.exceptions.MatrixesServiceException;
 import speakerrecognition.pojos.LabelsInertiaDistances;
 
 @Service
-public class LabelsInertiaService {
+public class LabelsInertiaCalculatorService {
 
 	@Autowired
 	private MatrixesService matrixesService;
@@ -37,9 +37,8 @@ public class LabelsInertiaService {
 		if (rowsInMatrix == distances.length)
 			distances = minDistances;
 		double inertia = matrixesService.sumOfVectorElements(minDistances);
-		LabelsInertiaDistances container = new LabelsInertiaDistances(inertia, distances, labels);
 
-		return container;
+		return new LabelsInertiaDistances(inertia, distances, labels);
 	}
 
 }

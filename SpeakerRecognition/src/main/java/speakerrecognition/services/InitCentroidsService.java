@@ -13,9 +13,9 @@ public class InitCentroidsService {
 	@Autowired
 	private MatrixesService matrixesService;
 
-	public double[][] InitCentroids(double[][] data, int nClusters, double[] xSqNorms) throws MatrixesServiceException {
+	public double[][] initCentroids(double[][] data, int nClusters, double[] xSqNorms) throws MatrixesServiceException {
 
-		double[][] centers = new double[nClusters][data[0].length];// numofcols
+		double[][] centers = new double[nClusters][data[0].length];
 		int nLocalTrials = 2 + (int) (Math.log(nClusters));
 		int centerId = (int) Math.floor(Math.random() * data.length);
 		for (int i = 0; i < data[0].length; i++) {
@@ -45,7 +45,7 @@ public class InitCentroidsService {
 						matrixesService.selectRow(distanceToCandidates, trial));
 				double newPot = matrixesService.sumOfVectorElements(newDistSq);
 
-				if (bestCandidate == -1 | newPot < bestPot) {
+				if (bestCandidate == -1 || newPot < bestPot) {
 					bestCandidate = candidateIds[trial];
 					bestPot = newPot;
 					bestDistSq = Arrays.copyOf(newDistSq, newDistSq.length);

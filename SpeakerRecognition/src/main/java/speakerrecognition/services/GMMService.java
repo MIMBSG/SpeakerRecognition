@@ -33,7 +33,7 @@ public class GMMService {
 
 		for (int i = 0; i < gmmParams.getnInit(); i++) {
 			kMeansService.fit(kMeansParams);
-			gmmParams.setMeans(kMeansParams.getBest_cluster_centers());
+			gmmParams.setMeans(kMeansParams.getBestClusterCenters());
 			gmmParams.setWeights(matrixService.fillVectorWithScalar(gmmParams.getWeights(),
 					(double) 1 / gmmParams.getNumOfComponents()));
 

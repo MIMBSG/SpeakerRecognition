@@ -9,8 +9,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-
-@Table(name = "var")
+@Table(name = "covar")
 public class CovarEntity {
 	@Id
 	@Column(name = "id", unique = true, nullable = false)
@@ -26,7 +25,7 @@ public class CovarEntity {
 	private Double value;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "id", nullable = false, insertable = false, updatable = false)
+	@JoinColumn(name = "user", nullable = false, insertable = false, updatable = false)
 	private UserEntity user;
 
 	public int getId() {

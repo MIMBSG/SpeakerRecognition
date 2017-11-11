@@ -9,7 +9,6 @@ public class MatrixesServiceException extends Exception {
 
 	public MatrixesServiceException(String message) {
 		super(message);
-		// TODO Auto-generated constructor stub
 	}
 
 }

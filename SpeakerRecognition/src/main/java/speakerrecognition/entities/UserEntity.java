@@ -27,13 +27,13 @@ public class UserEntity {
 	@Column(name = "lastName", nullable = false)
 	private String lastName;
 
-	@OneToMany(targetEntity = MeanEntity.class, mappedBy = "id", cascade = CascadeType.ALL)
+	@OneToMany(targetEntity = MeanEntity.class, mappedBy = "user", cascade = CascadeType.ALL)
 	private Set<MeanEntity> means = new HashSet<MeanEntity>();
 
-	@OneToMany(targetEntity = CovarEntity.class, mappedBy = "id", cascade = CascadeType.ALL)
+	@OneToMany(targetEntity = CovarEntity.class, mappedBy = "user", cascade = CascadeType.ALL)
 	private Set<CovarEntity> vars = new HashSet<CovarEntity>();
 
-	@OneToMany(targetEntity = WeightEntity.class, mappedBy = "id", cascade = CascadeType.ALL)
+	@OneToMany(targetEntity = WeightEntity.class, mappedBy = "user", cascade = CascadeType.ALL)
 	private Set<WeightEntity> weights = new HashSet<WeightEntity>();
 
 	public int getId() {
