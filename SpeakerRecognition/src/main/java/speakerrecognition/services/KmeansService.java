@@ -24,7 +24,7 @@ public class KmeansService {
 	public Kmeans fit(double[][] observations, int numOfComponents)
 			throws StatisticsServiceException, MatrixesServiceException {
 
-		Kmeans kmeansParameters = new Kmeans(observations, numOfComponents, tolerance(observations));
+		Kmeans kmeansParameters = new Kmeans(observations, numOfComponents, computeTolerance(observations));
 		double[][] clusterCenters = null;
 		double[] labels = null;
 		double inertia = 0;
@@ -56,7 +56,7 @@ public class KmeansService {
 		return kmeansParameters;
 	}
 
-	private double tolerance(double[][] x) throws StatisticsServiceException {
+	private double computeTolerance(double[][] x) throws StatisticsServiceException {
 		double tol = 0.0001;
 		double temp[] = statService.getVariance2(x);
 
