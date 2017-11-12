@@ -6,7 +6,6 @@ import org.springframework.stereotype.Service;
 import speakerrecognition.exceptions.MatrixesServiceException;
 import speakerrecognition.exceptions.StatisticsServiceException;
 import speakerrecognition.pojos.Kmeans;
-import speakerrecognition.pojos.LabelsInertiaDistances;
 import speakerrecognition.pojos.LabelsInertiaDistancesCenters;
 
 @Service
@@ -19,9 +18,14 @@ public class KmeansService {
 	@Autowired
 	private KmeansSingleService kmeansSingleService;
 
-	public void fit(Kmeans kmeansParameters) throws StatisticsServiceException, MatrixesServiceException {
+	private static final int N_INIT = 10;
+	private static final int MAX_ITER = 300;
 
-		double[][] cluster_centers = null;
+	public Kmeans fit(double[][] observations, int numOfComponents)
+			throws StatisticsServiceException, MatrixesServiceException {
+
+		Kmeans kmeansParameters = new Kmeans(observations, numOfComponents, tolerance(observations));
+		double[][] clusterCenters = null;
 		double[] labels = null;
 		double inertia = 0;
 
@@ -34,20 +38,31 @@ public class KmeansService {
 
 		double[] squaredNorms = matrixService.vectorOfSquaresNormOfRowsFromMatrix(kmeansParameters.getData());
 
-		for (int i = 0; i < kmeansParameters.getN_init(); i++) {
+		for (int i = 0; i < N_INIT; i++) {
 			LabelsInertiaDistancesCenters kmeansSingleParameters = kmeansSingleService.kmeansSingle(
-					kmeansParameters.getData(), kmeansParameters.getNumOfClusters(), squaredNorms,
-					kmeansParameters.getMax_iter(), kmeansParameters.getTolerance());
-			cluster_centers = kmeansSingleParameters.getCenters().clone();
+					kmeansParameters.getData(), kmeansParameters.getNumOfClusters(), squaredNorms, MAX_ITER,
+					kmeansParameters.getTolerance());
+			clusterCenters = kmeansSingleParameters.getCenters().clone();
 			inertia = kmeansSingleParameters.getInertia();
 			labels = kmeansSingleParameters.getLabels().clone();
-			if (inertia < kmeansParameters.getBest_inertia()) {
-				kmeansParameters.setBest_inertia(inertia);
-				kmeansParameters.setBest_labels(labels);
-				kmeansParameters.setBest_cluster_centers(cluster_centers);
+			if (inertia < kmeansParameters.getBestInertia()) {
+				kmeansParameters.setBestInertia(inertia);
+				kmeansParameters.setBestLabels(labels);
+				kmeansParameters.setBestClusterCenters(clusterCenters);
 			}
 		}
-		kmeansParameters.setBest_cluster_centers(
-				matrixService.matrixAddVector(kmeansParameters.getBest_cluster_centers(), matrixMean));
+		kmeansParameters.setBestClusterCenters(
+				matrixService.matrixAddVector(kmeansParameters.getBestClusterCenters(), matrixMean));
+		return kmeansParameters;
+	}
+
+	private double tolerance(double[][] x) throws StatisticsServiceException {
+		double tol = 0.0001;
+		double temp[] = statService.getVariance2(x);
+
+		for (int i = 0; i < temp.length; i++) {
+			temp[i] = temp[i] * tol;
+		}
+		return statService.getMean(temp);
 	}
 }

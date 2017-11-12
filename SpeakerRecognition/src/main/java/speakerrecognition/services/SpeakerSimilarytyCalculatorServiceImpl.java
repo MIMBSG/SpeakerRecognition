@@ -6,17 +6,17 @@ import org.springframework.stereotype.Service;
 import speakerrecognition.exceptions.MatrixesServiceException;
 import speakerrecognition.exceptions.StatisticsServiceException;
 import speakerrecognition.pojos.SpeakerModel;
-import speakerrecognition.services.interfaces.SpeakerModelService;
+import speakerrecognition.services.interfaces.SpeakersSimilarytyCalculatorService;
 
 @Service
-public class SpeakerModelServiceImpl implements SpeakerModelService {
+public class SpeakerSimilarytyCalculatorServiceImpl implements SpeakersSimilarytyCalculatorService {
 
 	@Autowired
 	private MatrixesService matrixesService;
 	@Autowired
 	private StatisticsService statisticsService;
 	@Autowired
-	private LogProbabilityService lprService;
+	private LogProbabilityCalculatorService lprService;
 
 	@Override
 	public double getScore(double[][] mfcc, SpeakerModel speakerModel)

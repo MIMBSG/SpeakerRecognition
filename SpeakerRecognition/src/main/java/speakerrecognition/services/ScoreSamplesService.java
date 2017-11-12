@@ -12,7 +12,7 @@ public class ScoreSamplesService {
 	@Autowired
 	private MatrixesService matrix;
 	@Autowired
-	private LogProbabilityService lprService;
+	private LogProbabilityCalculatorService lprService;
 
 	public ScoreSamples getScoreSamples(double[][] mfcc, double[][] means, double[][] covars, double[] weights,
 			int numberOfComponents) throws MatrixesServiceException {

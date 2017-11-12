@@ -25,7 +25,7 @@ public class MeanEntity {
 	private Double value;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "id", nullable = false, insertable = false, updatable = false)
+	@JoinColumn(name = "user", nullable = false, insertable = false, updatable = false)
 	private UserEntity user;
 
 	public int getId() {

@@ -6,7 +6,7 @@ import speakerrecognition.entities.CovarEntity;
 import speakerrecognition.entities.MeanEntity;
 import speakerrecognition.entities.WeightEntity;
 
-public interface CreaterMatrixService {
+public interface MatrixAssemblerService {
 
 	public double[][] createCovarMatrix(List<CovarEntity> covar);
 

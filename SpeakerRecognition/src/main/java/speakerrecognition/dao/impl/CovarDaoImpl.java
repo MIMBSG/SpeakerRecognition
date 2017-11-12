@@ -14,12 +14,11 @@ public class CovarDaoImpl extends AbstractDao<CovarEntity, Long> implements Cova
 	}
 
 	public List<CovarEntity> getById(int id) {
-		TypedQuery<CovarEntity> query = entityManager.createQuery("select var from VarEntity var where var.id = :id",
-				CovarEntity.class);
+		TypedQuery<CovarEntity> query = entityManager
+				.createQuery("select covar from CovarEntity covar where covar.id = :id", CovarEntity.class);
 
 		query.setParameter("id", id);
 
 		return query.getResultList();
 	}
-
 }
