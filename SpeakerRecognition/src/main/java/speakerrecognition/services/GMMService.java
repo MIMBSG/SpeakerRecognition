@@ -25,14 +25,13 @@ public class GMMService {
 
 	public void fit() throws MatrixesServiceException, StatisticsServiceException {
 		GMM gmmParams = new GMM();
-		Kmeans kMeansParams = new Kmeans();
 		double change = 0;
 
 		double[][] cv = new double[gmmParams.getNumOfCols()][gmmParams.getNumOfRows()];
 		double maxLogProb = Double.NEGATIVE_INFINITY;
 
 		for (int i = 0; i < gmmParams.getnInit(); i++) {
-			kMeansService.fit(kMeansParams);
+			Kmeans kMeansParams = kMeansService.fit(gmmParams.getObservations(),gmmParams.getNumOfComponents());
 			gmmParams.setMeans(kMeansParams.getBestClusterCenters());
 			gmmParams.setWeights(matrixService.fillVectorWithScalar(gmmParams.getWeights(),
 					(double) 1 / gmmParams.getNumOfComponents()));
