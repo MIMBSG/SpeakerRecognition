@@ -7,21 +7,23 @@ import speakerrecognition.exceptions.MatrixesServiceException;
 import speakerrecognition.pojos.LabelsInertiaDistances;
 import speakerrecognition.pojos.LabelsInertiaDistancesCenters;
 import speakerrecognition.services.CentersDenseService;
-import speakerrecognition.services.InitCentroidsService;
-import speakerrecognition.services.LabelsInertiaCalculatorService;
+import speakerrecognition.services.InitCentroidsServiceImpl;
+import speakerrecognition.services.LabelsInertiaCalculatorServiceImpl;
+import speakerrecognition.services.interfaces.KmeansSingleService;
 
 @Service
-public class KmeansSingleService {
+public class KmeansSingleServiceImpl implements KmeansSingleService {
 
 	@Autowired
-	private LabelsInertiaCalculatorService labelsInteria;
+	private LabelsInertiaCalculatorServiceImpl labelsInteria;
 	@Autowired
 	private MatrixesService matrixesService;
 	@Autowired
 	private CentersDenseService centersDense;
 	@Autowired
-	private InitCentroidsService initCentroids;
+	private InitCentroidsServiceImpl initCentroids;
 
+	@Override
 	public LabelsInertiaDistancesCenters kmeansSingle(double[][] data, int nClusters, double[] xSqNorms, int maxIter,
 			double tol) throws MatrixesServiceException {
 		double[][] centers = initCentroids.initCentroids(data, nClusters, xSqNorms);

@@ -5,14 +5,15 @@ import org.springframework.stereotype.Service;
 
 import speakerrecognition.exceptions.MatrixesServiceException;
 import speakerrecognition.pojos.ScoreSamples;
+import speakerrecognition.services.interfaces.ScoreSamplesService;
 
 @Service
-public class ScoreSamplesService {
+public class ScoreSamplesServiceImpl implements ScoreSamplesService {
 
 	@Autowired
 	private MatrixesService matrix;
 	@Autowired
-	private LogProbabilityCalculatorService lprService;
+	private LogProbabilityCalculatorServiceImpl lprService;
 
 	public ScoreSamples getScoreSamples(double[][] mfcc, double[][] means, double[][] covars, double[] weights,
 			int numberOfComponents) throws MatrixesServiceException {

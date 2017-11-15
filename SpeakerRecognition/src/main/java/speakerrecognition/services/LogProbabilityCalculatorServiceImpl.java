@@ -4,14 +4,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import speakerrecognition.exceptions.MatrixesServiceException;
+import speakerrecognition.services.interfaces.LogProbabilityCalculatorService;
 
 @Service
-public class LogProbabilityService {
-	
+public class LogProbabilityCalculatorServiceImpl implements LogProbabilityCalculatorService {
+
 	@Autowired
 	private MatrixesService matrixesService;
 
-	double[][] logMultivariateNormalDensity(double[][] mfcc, double[][] means, double[][] covars)
+	@Override
+	public double[][] logMultivariateNormalDensity(double[][] mfcc, double[][] means, double[][] covars)
 			throws MatrixesServiceException {
 
 		int rowsOfMFCC = mfcc.length;

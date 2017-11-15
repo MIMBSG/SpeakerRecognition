@@ -5,13 +5,15 @@ import org.springframework.stereotype.Service;
 
 import speakerrecognition.exceptions.MatrixesServiceException;
 import speakerrecognition.pojos.LabelsInertiaDistances;
+import speakerrecognition.services.interfaces.LabelsInertiaCalculatorService;
 
 @Service
-public class LabelsInertiaCalculatorService {
+public class LabelsInertiaCalculatorServiceImpl implements LabelsInertiaCalculatorService {
 
 	@Autowired
 	private MatrixesService matrixesService;
 
+	@Override
 	public LabelsInertiaDistances labelsPrecomputeDence(double[][] matrix, double[] matrixSquaredNorms,
 			double[][] centers, double[] distances) throws MatrixesServiceException {
 
