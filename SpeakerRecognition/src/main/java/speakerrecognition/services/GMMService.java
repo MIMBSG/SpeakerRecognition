@@ -31,7 +31,7 @@ public class GMMService {
 		double maxLogProb = Double.NEGATIVE_INFINITY;
 
 		for (int i = 0; i < gmmParams.getnInit(); i++) {
-			Kmeans kMeansParams = kMeansService.fit(gmmParams.getObservations(),gmmParams.getNumOfComponents());
+			Kmeans kMeansParams = kMeansService.fit(gmmParams.getObservations(), gmmParams.getNumOfComponents());
 			gmmParams.setMeans(kMeansParams.getBestClusterCenters());
 			gmmParams.setWeights(matrixService.fillVectorWithScalar(gmmParams.getWeights(),
 					(double) 1 / gmmParams.getNumOfComponents()));
@@ -60,7 +60,7 @@ public class GMMService {
 					}
 				}
 
-				doMstep(gmmParams.getObservations(), gmmParams.getResponsibilities(),gmmParams);
+				doMstep(gmmParams.getObservations(), gmmParams.getResponsibilities(), gmmParams);
 			}
 
 			if (gmmParams.getCurrentLogLikelihood() > maxLogProb) {
@@ -73,21 +73,25 @@ public class GMMService {
 		}
 		return gmmParams;
 	}
-	private void doMstep(double[][] data, double[][] responsibilities,GMM gmmParams) throws MatrixesServiceException {
+
+	private void doMstep(double[][] data, double[][] responsibilities, GMM gmmParams) throws MatrixesServiceException {
 		double[] weights = matrixService.sumsOfElementsInCols(responsibilities); // sumsOfElementsInCols/Rows
 		// ?
 		double[][] weightedXSum = matrixService.matrixMultiplyByMatrix(matrixService.transposeMatrix(responsibilities),
 				data);
 		double[] inverse_weights = matrixService
 				.invertElementsInVector(matrixService.vectorAddScalar(weights, 10 * gmmParams.getEPS()));
-		gmmParams.setWeights( matrixService.vectorAddScalar(matrixService.vectorMultiplyByScalar(weights,
-				1.0 / (matrixService.sumOfVectorElements(weights) + 10 * gmmParams.getEPS())), gmmParams.getEPS()));
-		gmmParams.setMeans( matrixService.matrixMultiplyByVectorElByEl(weightedXSum, inverse_weights));
-		gmmParams.setCovars(covarMstepDiag(gmmParams.getMeans(), data, responsibilities, weightedXSum, inverse_weights, gmmParams.getMinCovar()));
+		gmmParams.setWeights(matrixService.vectorAddScalar(
+				matrixService.vectorMultiplyByScalar(weights,
+						1.0 / (matrixService.sumOfVectorElements(weights) + 10 * gmmParams.getEPS())),
+				gmmParams.getEPS()));
+		gmmParams.setMeans(matrixService.matrixMultiplyByVectorElByEl(weightedXSum, inverse_weights));
+		gmmParams.setCovars(covarMstepDiag(gmmParams.getMeans(), data, responsibilities, weightedXSum, inverse_weights,
+				gmmParams.getMinCovar()));
 	}
 
 	private double[][] covarMstepDiag(double[][] means, double[][] X, double[][] responsibilities,
-									 double[][] weightedXSum, double[] norm, double minCovar) throws MatrixesServiceException {
+			double[][] weightedXSum, double[] norm, double minCovar) throws MatrixesServiceException {
 		double[][] covarDiagToReturn = null;
 		double[][] avgX2 = matrixService.matrixMultiplyByVectorElByEl(
 				matrixService.matrixMultiplyByMatrix(matrixService.transposeMatrix(responsibilities),

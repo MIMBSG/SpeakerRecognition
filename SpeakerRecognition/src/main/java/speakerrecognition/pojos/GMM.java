@@ -1,17 +1,6 @@
 package speakerrecognition.pojos;
 
-import org.springframework.beans.factory.annotation.Autowired;
-
-import speakerrecognition.exceptions.MatrixesServiceException;
-import speakerrecognition.services.MatrixesService;
-import speakerrecognition.services.StatisticsService;
-
 public class GMM {
-
-	@Autowired
-	private StatisticsService statService;
-	@Autowired
-	private MatrixesService matrixService;
 
 	private static final double EPS = 2.2204460492503131e-16;
 	private int nInit = 10;

@@ -25,9 +25,9 @@ public class KmeansService {
 			throws StatisticsServiceException, MatrixesServiceException {
 
 		Kmeans kmeansParameters = new Kmeans(observations, numOfComponents, computeTolerance(observations));
-		double[][] clusterCenters = null;
-		double[] labels = null;
-		double inertia = 0;
+		double[][] clusterCenters;
+		double[] labels;
+		double inertia;
 
 		double[] matrixMean = statService.getMean2(kmeansParameters.getData());
 		for (int i = 0; i < kmeansParameters.getNumOfRows(); i++) {

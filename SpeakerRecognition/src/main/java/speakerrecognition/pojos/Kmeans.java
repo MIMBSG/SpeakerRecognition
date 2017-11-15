@@ -4,15 +4,15 @@ import speakerrecognition.exceptions.StatisticsServiceException;
 
 public class Kmeans {
 
-	private int numOfClusters;
-	private int numOfRows;
-	private int numOfCols;
-	private double[][] data;
-	private double tolerance;
+	private int numOfClusters;//pot
+	private int numOfRows;//pot
+	private int numOfCols;//pot
+	private double[][] data;//pot
+	private double tolerance;//pot
 
-	private double[][] bestClusterCenters;
-	private double[] bestLabels;
-	private double bestInertia = Double.MAX_VALUE;
+	private double[][] bestClusterCenters;//pot
+	private double[] bestLabels;//pot
+	private double bestInertia = Double.MAX_VALUE;//pot
 
 	public Kmeans() {
 		super();
