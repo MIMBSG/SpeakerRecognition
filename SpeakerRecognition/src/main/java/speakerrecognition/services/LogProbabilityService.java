@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 import speakerrecognition.exceptions.MatrixesServiceException;
 
 @Service
-public class LogMultivariateNormalDensityService {
+public class LogProbabilityService {
 	
 	@Autowired
 	private MatrixesService matrixesService;
@@ -16,7 +16,7 @@ public class LogMultivariateNormalDensityService {
 
 		int rowsOfMFCC = mfcc.length;
 		int rowsOfMeans = means.length;
-		double[][] lpr = new double[rowsOfMFCC][rowsOfMeans];
+		double[][] logProbability = new double[rowsOfMFCC][rowsOfMeans];
 		int colsOfMFCC = mfcc[0].length;
 
 		double[][] logCovars = matrixesService.makeLogrithmInMatrix(covars);
@@ -48,9 +48,9 @@ public class LogMultivariateNormalDensityService {
 		double[][] sumOfTwoMainMatrixes = matrixesService.matrixAddMatrix(
 				squaredMFCCMultipliedByTransponsedInvertedCovars, mfccMultipliedByTransponsedMeansDividedByCovars);
 		sumOfTwoMainMatrixes = matrixesService.matrixAddVector(sumOfTwoMainMatrixes, sumsOfSumsCovsAndMeans);
-		lpr = matrixesService.matrixMultiplyByScalar(sumOfTwoMainMatrixes, -0.5);
+		logProbability = matrixesService.matrixMultiplyByScalar(sumOfTwoMainMatrixes, -0.5);
 
-		return lpr;
+		return logProbability;
 	}
 
 }

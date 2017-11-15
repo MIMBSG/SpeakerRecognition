@@ -28,81 +28,19 @@ public class GMM {
 	private double prevLogLikelihood = Double.NaN;
 	private double tol = 0.001;
 
-	private double[] logLikelihoods = null;
-	private double[][] responsibilities = null;
+	private double[] logLikelihoods;
+	private double[][] responsibilities;
 
-	private double[][] means = null;
-	private double[] weights = null;
-	private double[][] covars = null;
+	private double[][] means;
+	private double[] weights;
+	private double[][] covars;
 
-	private double[][] bestMeans = null;
-	private double[] bestWeights = null;
-	private double[][] bestCovars = null;
-
-	public void GMMHelper(double[][] data, int compNum) {
-		this.observations = data;
-		this.numOfRows = data.length;
-		this.numOfCols = data[0].length;
-		this.numOfComponents = compNum;
-		this.means = new double[compNum][data[0].length];
-		this.weights = new double[data.length];
-		this.covars = new double[compNum][data[0].length];
-	}
-
-	public void GMMHelper(double[][] data, int compNum, int maxIt) {
-		this.observations = data;
-		this.numOfRows = data.length;
-		this.numOfCols = data[0].length;
-		this.numOfComponents = compNum;
-		this.means = new double[compNum][data[0].length];
-		this.weights = new double[data.length];
-		this.covars = new double[compNum][data[0].length];
-		this.maxIter = maxIt;
-	}
-
-	public void GMMHelper(double[][] data, int compNum, int maxIt, double thr) {
-		this.observations = data;
-		this.numOfRows = data.length;
-		this.numOfCols = data[0].length;
-		this.numOfComponents = compNum;
-		this.means = new double[compNum][data[0].length];
-		this.weights = new double[data.length];
-		this.covars = new double[compNum][data[0].length];
-		this.maxIter = maxIt;
-		this.threshold = thr;
-	}
+	private double[][] bestMeans;
+	private double[] bestWeights;
+	private double[][] bestCovars;
 
 	public GMM() {
 		super();
-	}
-
-	public void doMstep(double[][] data, double[][] responsibilities) throws MatrixesServiceException {
-		double[] weights = matrixService.sumsOfElementsInCols(responsibilities); // sumsOfElementsInCols/Rows
-																					// ?
-		double[][] weightedXSum = matrixService.matrixMultiplyByMatrix(matrixService.transposeMatrix(responsibilities),
-				data);
-		double[] inverse_weights = matrixService
-				.invertElementsInVector(matrixService.vectorAddScalar(weights, 10 * EPS));
-		this.weights = matrixService.vectorAddScalar(matrixService.vectorMultiplyByScalar(weights,
-				1.0 / (matrixService.sumOfVectorElements(weights) + 10 * EPS)), EPS);
-		this.means = matrixService.matrixMultiplyByVectorElByEl(weightedXSum, inverse_weights);
-		this.covars = covarMstepDiag(this.means, data, responsibilities, weightedXSum, inverse_weights, this.minCovar);
-	}
-
-	public double[][] covarMstepDiag(double[][] means, double[][] X, double[][] responsibilities,
-			double[][] weightedXSum, double[] norm, double minCovar) throws MatrixesServiceException {
-		double[][] temp = null;
-		double[][] avgX2 = matrixService.matrixMultiplyByVectorElByEl(
-				matrixService.matrixMultiplyByMatrix(matrixService.transposeMatrix(responsibilities),
-						matrixService.multiplyMatrixesElementByElement(X, X)),
-				norm);
-		double[][] avgMeans2 = matrixService.matrixElementsToPower(means, 2);
-		double[][] avgXMeans = matrixService.matrixMultiplyByVectorElByEl(
-				matrixService.multiplyMatrixesElementByElement(means, weightedXSum), norm);
-		temp = matrixService.matrixAddScalar(matrixService.matrixAddMatrix(
-				matrixService.matrixSubstractMatrix(avgX2, matrixService.matrixMultiplyByScalar(avgXMeans, 2)),
-				avgMeans2), minCovar);
-		return temp;
 	}
 
 	public int getnInit() {
@@ -273,20 +211,8 @@ public class GMM {
 		this.bestCovars = bestCovars;
 	}
 
-	public StatisticsService getStatService() {
-		return statService;
-	}
-
-	public void setStatService(StatisticsService statService) {
-		this.statService = statService;
-	}
-
-	public MatrixesService getMatrixService() {
-		return matrixService;
-	}
-
-	public void setMatrixService(MatrixesService matrixService) {
-		this.matrixService = matrixService;
+	public static double getEPS() {
+		return EPS;
 	}
 
 }

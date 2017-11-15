@@ -28,10 +28,10 @@ public class SpeakerSimilarytyCalculatorServiceImpl implements SpeakersSimilaryt
 		double[][] covars = speakerModel.getCovars();
 		double[] weights = speakerModel.getWeights();
 
-		double[][] lpr = lprService.logMultivariateNormalDensity(mfcc, means, covars);
+		double[][] logProbabilities = lprService.logMultivariateNormalDensity(mfcc, means, covars);
 		weights = matrixesService.makeLogarithmInVector(weights);
-		lpr = matrixesService.matrixAddVector(lpr, weights);
-		double[] logProb = matrixesService.logSumExp(lpr);
+		logProbabilities = matrixesService.matrixAddVector(logProbabilities, weights);
+		double[] logProb = matrixesService.logSumExp(logProbabilities);
 		score = statisticsService.getMean(logProb);
 
 		return score;

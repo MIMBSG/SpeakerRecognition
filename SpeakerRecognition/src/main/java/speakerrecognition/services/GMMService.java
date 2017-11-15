@@ -23,11 +23,11 @@ public class GMMService {
 	@Autowired
 	private ScoreSamplesService scoreSmplService;
 
-	public void fit() throws MatrixesServiceException, StatisticsServiceException {
+	public GMM fit() throws MatrixesServiceException, StatisticsServiceException {
 		GMM gmmParams = new GMM();
 		double change = 0;
 
-		double[][] cv = new double[gmmParams.getNumOfCols()][gmmParams.getNumOfRows()];
+		double[][] cv;
 		double maxLogProb = Double.NEGATIVE_INFINITY;
 
 		for (int i = 0; i < gmmParams.getnInit(); i++) {
@@ -60,7 +60,7 @@ public class GMMService {
 					}
 				}
 
-				gmmParams.doMstep(gmmParams.getObservations(), gmmParams.getResponsibilities());
+				doMstep(gmmParams.getObservations(), gmmParams.getResponsibilities(),gmmParams);
 			}
 
 			if (gmmParams.getCurrentLogLikelihood() > maxLogProb) {
@@ -71,5 +71,34 @@ public class GMMService {
 			}
 
 		}
+		return gmmParams;
+	}
+	private void doMstep(double[][] data, double[][] responsibilities,GMM gmmParams) throws MatrixesServiceException {
+		double[] weights = matrixService.sumsOfElementsInCols(responsibilities); // sumsOfElementsInCols/Rows
+		// ?
+		double[][] weightedXSum = matrixService.matrixMultiplyByMatrix(matrixService.transposeMatrix(responsibilities),
+				data);
+		double[] inverse_weights = matrixService
+				.invertElementsInVector(matrixService.vectorAddScalar(weights, 10 * gmmParams.getEPS()));
+		gmmParams.setWeights( matrixService.vectorAddScalar(matrixService.vectorMultiplyByScalar(weights,
+				1.0 / (matrixService.sumOfVectorElements(weights) + 10 * gmmParams.getEPS())), gmmParams.getEPS()));
+		gmmParams.setMeans( matrixService.matrixMultiplyByVectorElByEl(weightedXSum, inverse_weights));
+		gmmParams.setCovars(covarMstepDiag(gmmParams.getMeans(), data, responsibilities, weightedXSum, inverse_weights, gmmParams.getMinCovar()));
+	}
+
+	private double[][] covarMstepDiag(double[][] means, double[][] X, double[][] responsibilities,
+									 double[][] weightedXSum, double[] norm, double minCovar) throws MatrixesServiceException {
+		double[][] covarDiagToReturn = null;
+		double[][] avgX2 = matrixService.matrixMultiplyByVectorElByEl(
+				matrixService.matrixMultiplyByMatrix(matrixService.transposeMatrix(responsibilities),
+						matrixService.multiplyMatrixesElementByElement(X, X)),
+				norm);
+		double[][] avgMeans2 = matrixService.matrixElementsToPower(means, 2);
+		double[][] avgXMeans = matrixService.matrixMultiplyByVectorElByEl(
+				matrixService.multiplyMatrixesElementByElement(means, weightedXSum), norm);
+		covarDiagToReturn = matrixService.matrixAddScalar(matrixService.matrixAddMatrix(
+				matrixService.matrixSubstractMatrix(avgX2, matrixService.matrixMultiplyByScalar(avgXMeans, 2)),
+				avgMeans2), minCovar);
+		return covarDiagToReturn;
 	}
 }
