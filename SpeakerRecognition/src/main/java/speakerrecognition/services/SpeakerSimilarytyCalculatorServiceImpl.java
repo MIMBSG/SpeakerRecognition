@@ -16,7 +16,7 @@ public class SpeakerSimilarytyCalculatorServiceImpl implements SpeakersSimilaryt
 	@Autowired
 	private StatisticsService statisticsService;
 	@Autowired
-	private LogProbabilityCalculatorService lprService;
+	private LogProbabilityCalculatorServiceImpl lprService;
 
 	@Override
 	public double getScore(double[][] mfcc, SpeakerModel speakerModel)

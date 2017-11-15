@@ -6,18 +6,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import speakerrecognition.exceptions.MatrixesServiceException;
+import speakerrecognition.services.interfaces.InitCentroidService;
 
 @Service
-public class InitCentroidsService {
+public class InitCentroidsServiceImpl implements InitCentroidService {
 
 	@Autowired
 	private MatrixesService matrixesService;
 
+	@Override
 	public double[][] initCentroids(double[][] data, int nClusters, double[] xSqNorms) throws MatrixesServiceException {
 
 		double[][] centers = new double[nClusters][data[0].length];
 		int nLocalTrials = 2 + (int) (Math.log(nClusters));
-		int centerId = (int) Math.floor(Math.random() * data.length);
 		for (int i = 0; i < data[0].length; i++) {
 			centers[0][i] = data[data[0].length][i];
 		}
