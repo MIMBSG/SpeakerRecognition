@@ -12,8 +12,7 @@ public class CentersDenseService {
 			for (int k = 0; k < nClusters; k++) {
 				int samplesNum = 0;
 				for (int z = 0; z < labels.length; z++) {
-					if (labels[z] == (double) k)
-					{
+					if (labels[z] == (double) k) {
 						sum[k] += data[z][j];
 						samplesNum += 1;
 					}

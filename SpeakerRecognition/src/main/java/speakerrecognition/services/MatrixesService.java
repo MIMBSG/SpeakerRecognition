@@ -1,5 +1,6 @@
 package speakerrecognition.services;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import speakerrecognition.exceptions.MatrixesServiceException;
@@ -7,6 +8,9 @@ import speakerrecognition.exceptions.StatisticsServiceException;
 
 @Service
 public class MatrixesService {
+
+	@Autowired
+	StatisticsService statisticsService;
 
 	private static final String VECTORS_MISMATCHED = "Vectors must have the same length!";
 	private static final String MATRIXES_COLS_NOT_EQUALS_ROWS = "Number of columns in primary matrix it is not the same as number of rows in secondary matrix!";
@@ -734,8 +738,6 @@ public class MatrixesService {
 	 */
 	public double[][] cov(double[][] matrix) throws StatisticsServiceException, MatrixesServiceException {
 
-		StatisticsService statisticsService = new StatisticsService();
-
 		double[][] covMatrix = matrix;
 		double[] meanVector = statisticsService.getMean2(transposeMatrix(matrix));
 		int columns = matrix[0].length;
@@ -960,7 +962,7 @@ public class MatrixesService {
 
 		for (int numOfCol = 0; numOfCol < cols; numOfCol++) {
 			maxValues[numOfCol] = Double.NEGATIVE_INFINITY;
-		} // JAK CO TO USUNĄĆ!!!
+		}
 
 		for (int numOfCol = 0; numOfCol < cols; numOfCol++) {
 			for (int numOfRow = 0; numOfRow < rows; numOfRow++)
