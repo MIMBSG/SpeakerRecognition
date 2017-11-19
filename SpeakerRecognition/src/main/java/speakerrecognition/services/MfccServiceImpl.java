@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import speakerrecognition.exceptions.MatrixesServiceException;
 import speakerrecognition.exceptions.MfccServiceException;
 import speakerrecognition.pojos.MfccParameters;
-import speakerrecognition.services.MfccHelper;
 
 public class MfccServiceImpl {
 	
@@ -16,7 +15,7 @@ private MatrixesService matrixService;
 
 private static final String wrongLimitsError = "Low limit can't be higher than high limit!";
 	
-	public MfccHelper extractMfcc(int[] samplesVector, int fs) throws MfccServiceException, MatrixesServiceException
+	public MfccParameters extractMfcc(int[] samplesVector, int fs) throws MfccServiceException, MatrixesServiceException
 	{
 		int frameLen;
 		int frameShift;
