@@ -8,6 +8,8 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
+import speakerrecognition.exceptions.CentersDenseServiceException;
 import speakerrecognition.exceptions.MatrixesServiceException;
 import speakerrecognition.exceptions.StatisticsServiceException;
 import speakerrecognition.pojos.GmmResult;
@@ -30,7 +32,7 @@ public class GmmServiceTest {
     private GmmServiceImpl gmmService;
 
     @Test
-    public void fitTest() throws MatrixesServiceException, StatisticsServiceException {
+    public void fitTest() throws MatrixesServiceException, StatisticsServiceException, CentersDenseServiceException {
         //given
         double[][] mfcc = { { 0, 1, 2 }, { 3, 4, 5 } };
         double[][] means = new double[2][2];

@@ -3,6 +3,7 @@ package speakerrecognition.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import speakerrecognition.exceptions.CentersDenseServiceException;
 import speakerrecognition.exceptions.MatrixesServiceException;
 import speakerrecognition.exceptions.StatisticsServiceException;
 import speakerrecognition.pojos.GmmResult;
@@ -32,7 +33,7 @@ public class GmmServiceImpl implements GmmService {
 
 	@Override
 	public GmmResult fit(double[][] mfcc, int numOfComponents)
-			throws MatrixesServiceException, StatisticsServiceException {
+			throws MatrixesServiceException, StatisticsServiceException, CentersDenseServiceException {
 		double[][] finalMeans = new double[numOfComponents][mfcc[0].length];
 		double[][] finalCovars = new double[numOfComponents][mfcc[0].length];
 		double[] finalWeights = new double[mfcc.length];

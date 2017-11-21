@@ -3,6 +3,7 @@ package speakerrecognition.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import speakerrecognition.exceptions.CentersDenseServiceException;
 import speakerrecognition.exceptions.MatrixesServiceException;
 import speakerrecognition.pojos.LabelsInertiaDistances;
 import speakerrecognition.pojos.LabelsInertiaDistancesCenters;
@@ -25,7 +26,7 @@ public class KmeansSingleServiceImpl implements KmeansSingleService {
 
 	@Override
 	public LabelsInertiaDistancesCenters kmeansSingle(double[][] data, int nClusters, double[] xSqNorms, int maxIter,
-			double tol) throws MatrixesServiceException {
+			double tol) throws MatrixesServiceException, CentersDenseServiceException {
 		double[][] centers = initCentroids.initCentroids(data, nClusters, xSqNorms);
 		double[] distances = new double[data.length];
 		double[] bestLabels = null;
@@ -38,7 +39,7 @@ public class KmeansSingleServiceImpl implements KmeansSingleService {
 					distances);
 			distances = labelsInertiaDistances.getDistances();
 
-			centers = centersDense.centersDense(data, labelsInertiaDistances.getDistances(), nClusters, distances);
+			centers = centersDense.centersDense(data, labelsInertiaDistances.getDistances(), nClusters);
 
 			if (labelsInertiaDistances.getInertia() < bestInertia) {
 				bestLabels = labelsInertiaDistances.getLabels().clone();

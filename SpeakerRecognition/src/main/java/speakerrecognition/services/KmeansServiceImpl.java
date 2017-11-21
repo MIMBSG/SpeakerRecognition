@@ -3,6 +3,7 @@ package speakerrecognition.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import speakerrecognition.exceptions.CentersDenseServiceException;
 import speakerrecognition.exceptions.MatrixesServiceException;
 import speakerrecognition.exceptions.StatisticsServiceException;
 import speakerrecognition.pojos.KmeansResult;
@@ -24,7 +25,7 @@ public class KmeansServiceImpl implements KmeansService {
 
 	@Override
 	public KmeansResult fit(double[][] observations, int numOfComponents)
-			throws StatisticsServiceException, MatrixesServiceException {
+			throws StatisticsServiceException, MatrixesServiceException, CentersDenseServiceException {
 
 		double[][] clusterCenters;
 		double inertia;
