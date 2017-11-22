@@ -79,7 +79,7 @@ public class MfccServiceImpl implements MfccService {
 		arrayLimitCheck(lowLimit, highLimit);
 		double[] result = new double[highLimit - lowLimit];
 		for (int i = 0; i < result.length; i++) {
-			result[i] = lowLimit + i;
+			result[i] = (double)lowLimit + (double)i;
 		}
 
 		return result;
@@ -132,9 +132,9 @@ public class MfccServiceImpl implements MfccService {
 			d1Matrix[0][i] /= Math.sqrt(2);
 		}
 		double[][] resultMatrix = new double[mfccNum][size];
-		for (int i = 1; i < mfccNum + 1; i++) {
+		for (int i = 0; i < mfccNum ; i++) {
 			for (int j = 0; j < size; j++) {
-				resultMatrix[i - 1][j] = d1Matrix[i][j];
+				resultMatrix[i][j] = d1Matrix[i][j];
 			}
 		}
 		return d1Matrix;
@@ -210,7 +210,7 @@ public class MfccServiceImpl implements MfccService {
 		return matrix;
 	}
 
-	private double[] hamming(int frameLen) {
+	public double[] hamming(int frameLen) {
 		double[] windowTemp = new double[frameLen];
 		for (int i = 0; i < windowTemp.length; i++) {
 			windowTemp[i] = 0.54 - 0.46 * Math.cos(2 * Math.PI / (double) frameLen * ((double) i + 0.5));

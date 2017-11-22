@@ -20,7 +20,7 @@ public class InitCentroidsServiceImpl implements InitCentroidService {
 		double[][] centers = new double[nClusters][data[0].length];
 		int nLocalTrials = 2 + (int) (Math.log(nClusters));
 		for (int i = 0; i < data[0].length; i++) {
-			centers[0][i] = data[data[0].length][i];
+			centers[0][i] = data[data[0].length-1][i];
 		}
 		double[] closestDistSq = matrixesService.euclideanDistancesBetweenVectorAndMatrix(centers[0], data, xSqNorms);
 		double currentPot = matrixesService.sumOfVectorElements(closestDistSq);

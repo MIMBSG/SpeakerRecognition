@@ -58,7 +58,7 @@ public class GmmServiceTest {
         GmmResult result = gmmService.fit(mfcc,numberOfComponenys);
 
         //then
-       // Assert.assertEquals(gmmResult,result);
+       Assert.assertEquals(gmmResult,result);
     }
     @Test
     public void doMstepTest() throws MatrixesServiceException {
