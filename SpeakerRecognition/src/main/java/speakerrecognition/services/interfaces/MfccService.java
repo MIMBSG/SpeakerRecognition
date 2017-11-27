@@ -6,7 +6,7 @@ import speakerrecognition.pojos.MfccParameters;
 
 public interface MfccService {
 
-	MfccParameters extractMfcc(int[] samplesVector, int fs) throws MfccServiceException, MatrixesServiceException;
+	MfccParameters extractMfcc(double[] samplesVector, int fs) throws MfccServiceException, MatrixesServiceException;
 
 	double[] arrange(int lowLimit, int highLimit) throws MfccServiceException;
 

@@ -25,7 +25,7 @@ public class SpeakerSimilarytyCalculatorServiceImplTest {
 	private LogProbabilityCalculatorServiceImpl lprService;
 
 	@InjectMocks
-	private SpeakerSimilarytyCalculatorServiceImpl speakerSimilarytyCalculatorServiceImpl;
+	private SpeakersSimilarytyCalculatorServiceImpl speakerSimilarytyCalculatorServiceImpl;
 
 	@Test
 	public void dummyTest() throws MatrixesServiceException, StatisticsServiceException {
@@ -34,7 +34,7 @@ public class SpeakerSimilarytyCalculatorServiceImplTest {
 		double[][] means = new double[2][2];
 		double[][] covars = new double[2][2];
 		double[] weights = new double[2];
-		SpeakerModel speakerModel = new SpeakerModel(means, covars, weights, "");
+		SpeakerModel speakerModel = new SpeakerModel(means, covars, weights, "", "");
 
 		double[][] logProbabilities = new double[2][2];
 		double[] logProb = new double[2];

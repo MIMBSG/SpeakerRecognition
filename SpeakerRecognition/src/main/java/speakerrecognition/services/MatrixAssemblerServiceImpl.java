@@ -1,6 +1,9 @@
 package speakerrecognition.services;
 
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.stereotype.Service;
 
@@ -13,26 +16,32 @@ import speakerrecognition.services.interfaces.MatrixAssemblerService;
 public class MatrixAssemblerServiceImpl implements MatrixAssemblerService {
 
 	@Override
-	public double[][] createCovarMatrix(List<CovarEntity> covar) {
-		int rows = getRowsNumberVar(covar);
-		int cols = getColumnsNumberVar(covar);
+	public double[][] createCovarMatrix(Set<CovarEntity> covar) {
+		int rows = getRowsNumberCovar(covar);
+		int cols = getColumnsNumberCovar(covar);
 		double[][] covarMatrix = new double[rows][cols];
 
-		for (CovarEntity covarEntity : covar) {
+		Iterator<CovarEntity> iterator = covar.iterator();
+
+		while (iterator.hasNext()) {
+			CovarEntity covarEntity = iterator.next();
 			int numOfRow = covarEntity.getRowIndex();
 			int numOfCol = covarEntity.getColumnIndex();
 			covarMatrix[numOfRow][numOfCol] = covarEntity.getValue();
 		}
+
 		return covarMatrix;
 	}
 
 	@Override
-	public double[][] createMeanMatrix(List<MeanEntity> mean) {
+	public double[][] createMeanMatrix(Set<MeanEntity> mean) {
 		int rows = getRowsNumberMean(mean);
 		int cols = getColumnsNumberMean(mean);
 		double[][] meanMatrix = new double[rows][cols];
 
-		for (MeanEntity meanEntity : mean) {
+		Iterator<MeanEntity> iterator = mean.iterator();
+		while (iterator.hasNext()) {
+			MeanEntity meanEntity = iterator.next();
 			int numOfRow = meanEntity.getRowIndex();
 			int numOfCol = meanEntity.getColumnIndex();
 			meanMatrix[numOfRow][numOfCol] = meanEntity.getValue();
@@ -41,40 +50,48 @@ public class MatrixAssemblerServiceImpl implements MatrixAssemblerService {
 	}
 
 	@Override
-	public double[] createWeightVec(List<WeightEntity> weight) {
+	public double[] createWeightVec(Set<WeightEntity> weight) {
 		int elements = getNumberOfElementsWeight(weight);
 		double[] weightVec = new double[elements];
 
-		for (WeightEntity weightEntity : weight) {
+		Iterator<WeightEntity> iterator = weight.iterator();
+		while (iterator.hasNext()) {
+			WeightEntity weightEntity = iterator.next();
 			int numOfEl = weightEntity.getIndex();
 			weightVec[numOfEl] = weightEntity.getValue();
 		}
 		return weightVec;
 	}
 
-	private int getRowsNumberVar(List<CovarEntity> var) {
+	private int getRowsNumberCovar(Set<CovarEntity> covar) {
 		int rows = 0;
-		for (CovarEntity varEntity : var) {
-			if (varEntity.getRowIndex() > rows) {
-				rows = varEntity.getRowIndex();
+		Iterator<CovarEntity> iterator = covar.iterator();
+		while (iterator.hasNext()) {
+			CovarEntity covarEntity = iterator.next();
+			if (covarEntity.getRowIndex() > rows) {
+				rows = covarEntity.getRowIndex();
 			}
 		}
 		return rows;
 	}
 
-	private int getColumnsNumberVar(List<CovarEntity> var) {
+	private int getColumnsNumberCovar(Set<CovarEntity> covar) {
 		int cols = 0;
-		for (CovarEntity varEntity : var) {
-			if (varEntity.getColumnIndex() > cols) {
-				cols = varEntity.getColumnIndex();
+		Iterator<CovarEntity> iterator = covar.iterator();
+		while (iterator.hasNext()) {
+			CovarEntity covarEntity = iterator.next();
+			if (covarEntity.getColumnIndex() > cols) {
+				cols = covarEntity.getColumnIndex();
 			}
 		}
 		return cols;
 	}
 
-	private int getRowsNumberMean(List<MeanEntity> mean) {
+	private int getRowsNumberMean(Set<MeanEntity> mean) {
 		int rows = 0;
-		for (MeanEntity meanEntity : mean) {
+		Iterator<MeanEntity> iterator = mean.iterator();
+		while (iterator.hasNext()) {
+			MeanEntity meanEntity = iterator.next();
 			if (meanEntity.getRowIndex() > rows) {
 				rows = meanEntity.getRowIndex();
 			}
@@ -82,9 +99,11 @@ public class MatrixAssemblerServiceImpl implements MatrixAssemblerService {
 		return rows;
 	}
 
-	private int getColumnsNumberMean(List<MeanEntity> mean) {
+	private int getColumnsNumberMean(Set<MeanEntity> mean) {
 		int cols = 0;
-		for (MeanEntity meanEntity : mean) {
+		Iterator<MeanEntity> iterator = mean.iterator();
+		while (iterator.hasNext()) {
+			MeanEntity meanEntity = iterator.next();
 			if (meanEntity.getColumnIndex() > cols) {
 				cols = meanEntity.getColumnIndex();
 			}
@@ -92,13 +111,49 @@ public class MatrixAssemblerServiceImpl implements MatrixAssemblerService {
 		return cols;
 	}
 
-	private int getNumberOfElementsWeight(List<WeightEntity> weight) {
+	private int getNumberOfElementsWeight(Set<WeightEntity> weight) {
 		int elements = 0;
-		for (WeightEntity weightEntity : weight) {
+		Iterator<WeightEntity> iterator = weight.iterator();
+		while (iterator.hasNext()) {
+			WeightEntity weightEntity = iterator.next();
 			if (weightEntity.getIndex() > elements) {
 				elements = weightEntity.getIndex();
 			}
 		}
 		return elements;
+	}
+
+	@Override
+	public Set<CovarEntity> createCovarEntity(double[][] covars) {
+		Set<CovarEntity> covarEntities = new HashSet<CovarEntity>();
+		for (int row = 0; row < covars.length; row++) {
+			for (int col = 0; col < covars[0].length; col++) {
+				CovarEntity covarEntity = new CovarEntity(row, col, covars[row][col]);
+				covarEntities.add(covarEntity);
+			}
+		}
+		return covarEntities;
+	}
+
+	@Override
+	public Set<MeanEntity> createMeanEntity(double[][] means) {
+		Set<MeanEntity> meanEntities = new HashSet<MeanEntity>();
+		for (int row = 0; row < means.length; row++) {
+			for (int col = 0; col < means[0].length; col++) {
+				MeanEntity meanEntity = new MeanEntity(row, col, means[row][col]);
+				meanEntities.add(meanEntity);
+			}
+		}
+		return meanEntities;
+	}
+
+	@Override
+	public Set<WeightEntity> createWeightEntity(double[] weights) {
+		Set<WeightEntity> weightEntities = new HashSet<WeightEntity>();
+		for (int element = 0; element < weights.length; element++) {
+			WeightEntity weightEntity = new WeightEntity(element, weights[element]);
+			weightEntities.add(weightEntity);
+		}
+		return weightEntities;
 	}
 }

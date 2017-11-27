@@ -24,9 +24,16 @@ public class CovarEntity {
 	@Column(name = "value")
 	private Double value;
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "user", nullable = false, insertable = false, updatable = false)
 	private UserEntity user;
+
+	public CovarEntity(int rowIndex, int columnIndex, Double value) {
+		super();
+		this.rowIndex = rowIndex;
+		this.columnIndex = columnIndex;
+		this.value = value;
+	}
 
 	public int getId() {
 		return id;
