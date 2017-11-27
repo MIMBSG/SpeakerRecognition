@@ -21,9 +21,15 @@ public class WeightEntity {
 	@Column(name = "value")
 	private Double value;
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "user", nullable = false, insertable = false, updatable = false)
 	private UserEntity user;
+
+	public WeightEntity(int index, Double value) {
+		super();
+		this.index = index;
+		this.value = value;
+	}
 
 	public int getId() {
 		return id;

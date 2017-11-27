@@ -6,17 +6,19 @@ public class SpeakerModel {
 	private double[][] covars;
 	private double[] weights;
 	private String name;
+	private String lastName;
 
 	public SpeakerModel() {
 		super();
 	}
 
-	public SpeakerModel(double[][] means, double[][] covars, double[] weights, String name) {
+	public SpeakerModel(double[][] means, double[][] covars, double[] weights, String name, String lastName) {
 		super();
 		this.means = means;
 		this.covars = covars;
 		this.weights = weights;
 		this.name = name;
+		this.lastName = lastName;
 	}
 
 	public double[][] getMeans() {
@@ -49,6 +51,14 @@ public class SpeakerModel {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public String getLastName() {
+		return lastName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
 	}
 
 }

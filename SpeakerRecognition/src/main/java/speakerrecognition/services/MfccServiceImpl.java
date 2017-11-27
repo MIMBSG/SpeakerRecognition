@@ -16,7 +16,7 @@ public class MfccServiceImpl implements MfccService {
 	private static final String wrongLimitsError = "Low limit can't be higher than high limit!";
 
 	@Override
-	public MfccParameters extractMfcc(int[] samplesVector, int fs)
+	public MfccParameters extractMfcc(double[] samplesVector, int fs)
 			throws MfccServiceException, MatrixesServiceException {
 		int frameLen;
 		int frameShift;

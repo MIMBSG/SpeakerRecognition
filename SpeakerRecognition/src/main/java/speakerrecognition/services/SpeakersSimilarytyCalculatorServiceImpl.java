@@ -9,7 +9,7 @@ import speakerrecognition.pojos.SpeakerModel;
 import speakerrecognition.services.interfaces.SpeakersSimilarytyCalculatorService;
 
 @Service
-public class SpeakerSimilarytyCalculatorServiceImpl implements SpeakersSimilarytyCalculatorService {
+public class SpeakersSimilarytyCalculatorServiceImpl implements SpeakersSimilarytyCalculatorService {
 
 	@Autowired
 	private MatrixesService matrixesService;

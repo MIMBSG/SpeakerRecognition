@@ -2,11 +2,18 @@ package speakerrecognition.services;
 
 import org.junit.Assert;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import speakerrecognition.exceptions.StatisticsServiceException;
-
+@RunWith(SpringJUnit4ClassRunner.class)
+@SpringBootTest
 public class StatisticsServiceTest {
-	private StatisticsService statserv = new StatisticsService();
+	
+	@Autowired
+	private StatisticsService statserv;
 
 	@Test
 	public void SuccessGetMean() throws StatisticsServiceException {

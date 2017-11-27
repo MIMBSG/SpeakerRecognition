@@ -13,7 +13,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "user")
+@Table(name = "users")
 public class UserEntity {
 
 	@Id
@@ -31,10 +31,24 @@ public class UserEntity {
 	private Set<MeanEntity> means = new HashSet<MeanEntity>();
 
 	@OneToMany(targetEntity = CovarEntity.class, mappedBy = "user", cascade = CascadeType.ALL)
-	private Set<CovarEntity> vars = new HashSet<CovarEntity>();
+	private Set<CovarEntity> covars = new HashSet<CovarEntity>();
 
 	@OneToMany(targetEntity = WeightEntity.class, mappedBy = "user", cascade = CascadeType.ALL)
 	private Set<WeightEntity> weights = new HashSet<WeightEntity>();
+
+	public UserEntity(Set<MeanEntity> means, Set<CovarEntity> covars, Set<WeightEntity> weights, String name,
+			String lastName) {
+		super();
+		this.name = name;
+		this.lastName = lastName;
+		this.means = means;
+		this.covars = covars;
+		this.weights = weights;
+	}
+
+	public UserEntity() {
+		super();
+	}
 
 	public int getId() {
 		return id;
@@ -68,12 +82,12 @@ public class UserEntity {
 		this.means = means;
 	}
 
-	public Set<CovarEntity> getVars() {
-		return vars;
+	public Set<CovarEntity> getCovars() {
+		return covars;
 	}
 
-	public void setVars(Set<CovarEntity> vars) {
-		this.vars = vars;
+	public void setCovars(Set<CovarEntity> covars) {
+		this.covars = covars;
 	}
 
 	public Set<WeightEntity> getWeights() {
