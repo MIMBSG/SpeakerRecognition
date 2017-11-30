@@ -45,7 +45,6 @@ public class SpeakerModelServiceImpl implements SpeakerModelService {
 		Set<MeanEntity> meanEntities = matrixAssemblerService.createMeanEntity(gmm.getMeans());
 		UserEntity userEntity = new UserEntity(meanEntities, covarEntities, weightEntities, name, lastName);
 		userDao.save(userEntity);
-
 		return userEntity;
 	}
 

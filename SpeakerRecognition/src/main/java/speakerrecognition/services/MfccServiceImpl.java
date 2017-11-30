@@ -27,9 +27,8 @@ public class MfccServiceImpl implements MfccService {
 
 		int frameLen = setFrameLen(fs);
 		int frameShift = setFrameShift(fs);
-		int fftSize = frameLen;
 		double[] windowVector = hamming(frameLen);
-		double[][] melfbCoeffs = melFilterBank(MELFILTER_BANDS, fftSize, fs);
+		double[][] melfbCoeffs = melFilterBank(MELFILTER_BANDS, frameLen, fs);
 		double[][] mfccCoeffs;
 
 		DoubleFFT_1D fftDo = new DoubleFFT_1D(frameLen);
