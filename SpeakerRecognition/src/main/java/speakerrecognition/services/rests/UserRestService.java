@@ -31,14 +31,14 @@ public class UserRestService {
 		this.speakerRecognitionService = speakerRecognitionService;
 	}
 
-	@RequestMapping(value = "/register/{samples,name,lastName}", method = RequestMethod.GET)
+	@RequestMapping(value = "/register/{samples},{name},{lastName}", method = RequestMethod.POST)
 	@ResponseBody
 	public UserTO registerUser(@PathVariable double[] samples, String name, String lastName)
 			throws MfccServiceException, MatrixesServiceException, StatisticsServiceException {
 		return UserMapper.map(speakerModelService.creatorSpeakerModel(samples, name, lastName));
 	}
 
-	@RequestMapping(value = "/recognition/{samples}", method = RequestMethod.GET)
+	@RequestMapping(value = "/recognition/{samples}", method = RequestMethod.POST)
 	@ResponseBody
 	public UserTO recognitionUser(@PathVariable double[] samples)
 			throws MfccServiceException, MatrixesServiceException, StatisticsServiceException {

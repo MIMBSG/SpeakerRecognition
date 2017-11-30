@@ -8,6 +8,7 @@ import speakerrecognition.exceptions.StatisticsServiceException;
 import speakerrecognition.pojos.KmeansResult;
 import speakerrecognition.pojos.LabelsInertiaDistancesCenters;
 import speakerrecognition.services.interfaces.KmeansService;
+import speakerrecognition.services.interfaces.KmeansSingleService;
 
 @Service
 public class KmeansServiceImpl implements KmeansService {
@@ -17,7 +18,7 @@ public class KmeansServiceImpl implements KmeansService {
 	@Autowired
 	private MatrixesService matrixService;
 	@Autowired
-	private KmeansSingleServiceImpl kmeansSingleService;
+	private KmeansSingleService kmeansSingleService;
 
 	private static final int N_INIT = 10;
 	private static final int MAX_ITER = 300;

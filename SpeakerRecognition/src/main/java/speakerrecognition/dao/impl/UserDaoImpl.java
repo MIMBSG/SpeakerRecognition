@@ -4,9 +4,12 @@ import java.util.List;
 
 import javax.persistence.TypedQuery;
 
+import org.springframework.stereotype.Repository;
+
 import speakerrecognition.dao.UserDao;
 import speakerrecognition.entities.UserEntity;
 
+@Repository
 public class UserDaoImpl extends AbstractDao<UserEntity, Long> implements UserDao {
 
 	UserDaoImpl() {
