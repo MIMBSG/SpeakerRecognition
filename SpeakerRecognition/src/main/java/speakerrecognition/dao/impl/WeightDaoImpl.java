@@ -4,9 +4,12 @@ import java.util.List;
 
 import javax.persistence.TypedQuery;
 
+import org.springframework.stereotype.Repository;
+
 import speakerrecognition.dao.WeightDao;
 import speakerrecognition.entities.WeightEntity;
 
+@Repository
 public class WeightDaoImpl extends AbstractDao<WeightEntity, Long> implements WeightDao {
 
 	WeightDaoImpl() {

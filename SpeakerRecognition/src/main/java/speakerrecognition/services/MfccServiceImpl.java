@@ -2,74 +2,70 @@ package speakerrecognition.services;
 
 import org.jtransforms.fft.DoubleFFT_1D;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import speakerrecognition.exceptions.MatrixesServiceException;
 import speakerrecognition.exceptions.MfccServiceException;
 import speakerrecognition.pojos.MfccParameters;
 import speakerrecognition.services.interfaces.MfccService;
 
+@Service
 public class MfccServiceImpl implements MfccService {
 
 	@Autowired
 	private MatrixesService matrixService;
 
 	private static final String wrongLimitsError = "Low limit can't be higher than high limit!";
+	private static final int MELFILTER_BANDS = 40;
+	private static final double POWER_SPECTRUM_FLOOR = 0.0001;
+	private static final int MFCC_NUM = 13;
+	private static final double PRE_EMPH = 0.95;
 
 	@Override
 	public MfccParameters extractMfcc(double[] samplesVector, int fs)
 			throws MfccServiceException, MatrixesServiceException {
-		int frameLen;
-		int frameShift;
-		int fftSize;
-		int melfilterBands = 40;
-		int mfccNum = 13;
-		double powerSpectrumFloor = 0.0001;
-		double preEmph = 0.95;
-		double[] windowVector;
-		double[][] melfbCoeffs = null;
-		double[][] mfccCoeffs = null;
-		frameLen = setFrameLen(fs);
-		frameShift = setFrameShift(fs);
-		fftSize = frameLen;
-		windowVector = hamming(frameLen);
-		melfbCoeffs = melFilterBank(melfilterBands, fftSize, fs);
 
-		if (samplesVector != null) {
-			DoubleFFT_1D fftDo = new DoubleFFT_1D(frameLen);
-			double[] fft1 = new double[frameLen * 2];
-			double[] fftFinal = new double[frameLen / 2 + 1];
-			int framesNum = (int) ((double) (samplesVector.length - frameLen) / (double) (frameShift)) + 1;
-			mfccCoeffs = new double[framesNum][mfccNum];
-			double[] frame = new double[frameLen];
+		int frameLen = setFrameLen(fs);
+		int frameShift = setFrameShift(fs);
+		int fftSize = frameLen;
+		double[] windowVector = hamming(frameLen);
+		double[][] melfbCoeffs = melFilterBank(MELFILTER_BANDS, fftSize, fs);
+		double[][] mfccCoeffs;
 
-			for (int i = 0; i < framesNum; i++) {
-				for (int j = 0; j < frameLen; j++) {
-					frame[j] = (double) samplesVector[i * frameShift + j];
-				}
+		DoubleFFT_1D fftDo = new DoubleFFT_1D(frameLen);
+		double[] fft1 = new double[frameLen * 2];
+		double[] fftFinal = new double[frameLen / 2 + 1];
+		int framesNum = (int) ((double) (samplesVector.length - frameLen) / (double) (frameShift)) + 1;
+		mfccCoeffs = new double[framesNum][MFCC_NUM];
+		double[] frame = new double[frameLen];
 
-				frame = matrixService.vectorMultiplyByVector(frame, windowVector);
-				frame = preemphasis(frame, preEmph);
-				System.arraycopy(frame, 0, fft1, 0, frameLen);
-				fftDo.realForwardFull(fft1);
-
-				for (int k = 0; k < (frameLen / 2 + 1); k++) {
-					fftFinal[k] = Math.pow(Math.sqrt(Math.pow(fft1[k * 2], 2) + Math.pow(fft1[k * 2 + 1], 2)), 2);
-
-					if (fftFinal[k] < powerSpectrumFloor) {
-						fftFinal[k] = powerSpectrumFloor;
-					}
-				}
-
-				double[] dotProd = matrixService.matrixMultiplyByVector(melfbCoeffs, fftFinal);
-				for (int j = 0; j < dotProd.length; j++) {
-					dotProd[j] = Math.log(dotProd[j]);
-				}
-				double[][] d1Matrix = dctMatrix(melfilterBands, mfccNum);
-				dotProd = matrixService.matrixMultiplyByVector(d1Matrix, dotProd);
-				mfccCoeffs[i] = dotProd;
+		for (int i = 0; i < framesNum; i++) {
+			for (int j = 0; j < frameLen; j++) {
+				frame[j] = (double) samplesVector[i * frameShift + j];
 			}
 
+			frame = matrixService.vectorMultiplyByVector(frame, windowVector);
+			frame = preemphasis(frame, PRE_EMPH);
+			System.arraycopy(frame, 0, fft1, 0, frameLen);
+			fftDo.realForwardFull(fft1);
+
+			for (int k = 0; k < (frameLen / 2 + 1); k++) {
+				fftFinal[k] = Math.pow(Math.sqrt(Math.pow(fft1[k * 2], 2) + Math.pow(fft1[k * 2 + 1], 2)), 2);
+
+				if (fftFinal[k] < POWER_SPECTRUM_FLOOR) {
+					fftFinal[k] = POWER_SPECTRUM_FLOOR;
+				}
+			}
+
+			double[] dotProd = matrixService.matrixMultiplyByVector(melfbCoeffs, fftFinal);
+			for (int j = 0; j < dotProd.length; j++) {
+				dotProd[j] = Math.log(dotProd[j]);
+			}
+			double[][] d1Matrix = dctMatrix(MELFILTER_BANDS, MFCC_NUM);
+			dotProd = matrixService.matrixMultiplyByVector(d1Matrix, dotProd);
+			mfccCoeffs[i] = dotProd;
 		}
+
 		MfccParameters result = new MfccParameters(mfccCoeffs);
 		return result;
 	}

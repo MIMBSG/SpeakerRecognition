@@ -8,9 +8,9 @@ import speakerrecognition.exceptions.StatisticsServiceException;
 import speakerrecognition.pojos.GmmResult;
 import speakerrecognition.pojos.KmeansResult;
 import speakerrecognition.pojos.ScoreSamples;
-import speakerrecognition.services.KmeansServiceImpl;
-import speakerrecognition.services.ScoreSamplesServiceImpl;
 import speakerrecognition.services.interfaces.GmmService;
+import speakerrecognition.services.interfaces.KmeansService;
+import speakerrecognition.services.interfaces.ScoreSamplesService;
 
 @Service
 public class GmmServiceImpl implements GmmService {
@@ -20,9 +20,9 @@ public class GmmServiceImpl implements GmmService {
 	@Autowired
 	private StatisticsService statService;
 	@Autowired
-	private KmeansServiceImpl kMeansService;
+	private KmeansService kMeansService;
 	@Autowired
-	private ScoreSamplesServiceImpl scoreSmplService;
+	private ScoreSamplesService scoreSmplService;
 
 	private static final double EPS = 2.2204460492503131e-16;
 	private static final int N_INIT = 10;

@@ -6,10 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import speakerrecognition.exceptions.MatrixesServiceException;
-import speakerrecognition.services.interfaces.InitCentroidService;
+import speakerrecognition.services.interfaces.InitCentroidsService;
 
 @Service
-public class InitCentroidsServiceImpl implements InitCentroidService {
+public class InitCentroidsServiceImpl implements InitCentroidsService {
 
 	@Autowired
 	private MatrixesService matrixesService;

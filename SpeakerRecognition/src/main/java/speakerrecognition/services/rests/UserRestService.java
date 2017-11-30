@@ -31,7 +31,7 @@ public class UserRestService {
 		this.speakerRecognitionService = speakerRecognitionService;
 	}
 
-	@RequestMapping(value = "/register/{samples,name,lastName}", method = RequestMethod.GET)
+	@RequestMapping(value = "/register/{samples},{name},{lastName}", method = RequestMethod.GET)
 	@ResponseBody
 	public UserTO registerUser(@PathVariable double[] samples, String name, String lastName)
 			throws MfccServiceException, MatrixesServiceException, StatisticsServiceException {

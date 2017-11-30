@@ -4,9 +4,12 @@ import java.util.List;
 
 import javax.persistence.TypedQuery;
 
+import org.springframework.stereotype.Repository;
+
 import speakerrecognition.dao.CovarDao;
 import speakerrecognition.entities.CovarEntity;
 
+@Repository
 public class CovarDaoImpl extends AbstractDao<CovarEntity, Long> implements CovarDao {
 
 	CovarDaoImpl() {
