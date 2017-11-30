@@ -146,7 +146,7 @@ public class MfccServiceImpl implements MfccService {
 			cfVector[i] = sampleRate * f0 * (Math.exp(cfVector[i] * lr) - 1);
 		}
 
-		double[] bl = { 0, 1, fftLength, fftLength + 1 };
+		double[] bl = { 0, 1, numOfFilterBanks, numOfFilterBanks + 1 };
 
 		for (int i = 0; i < bl.length; i++) {
 			bl[i] = fftLength * f0 * (Math.exp(bl[i] * lr) - 1);
