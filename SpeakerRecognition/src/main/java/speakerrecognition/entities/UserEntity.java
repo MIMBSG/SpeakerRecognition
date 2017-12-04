@@ -46,6 +46,12 @@ public class UserEntity {
 		this.weights = weights;
 	}
 
+	public UserEntity(String name, String lastName) {
+		super();
+		this.name = name;
+		this.lastName = lastName;
+	}
+
 	public UserEntity() {
 		super();
 	}

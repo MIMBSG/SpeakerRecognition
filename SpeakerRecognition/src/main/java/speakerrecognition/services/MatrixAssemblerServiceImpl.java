@@ -12,6 +12,7 @@ import speakerrecognition.dao.MeanDao;
 import speakerrecognition.dao.WeightDao;
 import speakerrecognition.entities.CovarEntity;
 import speakerrecognition.entities.MeanEntity;
+import speakerrecognition.entities.UserEntity;
 import speakerrecognition.entities.WeightEntity;
 import speakerrecognition.services.interfaces.MatrixAssemblerService;
 
@@ -82,7 +83,7 @@ public class MatrixAssemblerServiceImpl implements MatrixAssemblerService {
 				rows = covarEntity.getRowIndex();
 			}
 		}
-		return rows;
+		return rows + 1;
 	}
 
 	private int getColumnsNumberCovar(Set<CovarEntity> covar) {
@@ -94,7 +95,7 @@ public class MatrixAssemblerServiceImpl implements MatrixAssemblerService {
 				cols = covarEntity.getColumnIndex();
 			}
 		}
-		return cols;
+		return cols + 1;
 	}
 
 	private int getRowsNumberMean(Set<MeanEntity> mean) {
@@ -106,7 +107,7 @@ public class MatrixAssemblerServiceImpl implements MatrixAssemblerService {
 				rows = meanEntity.getRowIndex();
 			}
 		}
-		return rows;
+		return rows + 1;
 	}
 
 	private int getColumnsNumberMean(Set<MeanEntity> mean) {
@@ -118,7 +119,7 @@ public class MatrixAssemblerServiceImpl implements MatrixAssemblerService {
 				cols = meanEntity.getColumnIndex();
 			}
 		}
-		return cols;
+		return cols + 1;
 	}
 
 	private int getNumberOfElementsWeight(Set<WeightEntity> weight) {
@@ -130,11 +131,11 @@ public class MatrixAssemblerServiceImpl implements MatrixAssemblerService {
 				elements = weightEntity.getIndex();
 			}
 		}
-		return elements;
+		return elements + 1;
 	}
 
 	@Override
-	public Set<CovarEntity> createCovarEntity(double[][] covars) {
+	public Set<CovarEntity> createCovarEntity(double[][] covars, UserEntity user) {
 		Set<CovarEntity> covarEntities = new HashSet<CovarEntity>();
 		CovarEntity covarEntity = new CovarEntity();
 		for (int row = 0; row < covars.length; row++) {
@@ -142,6 +143,7 @@ public class MatrixAssemblerServiceImpl implements MatrixAssemblerService {
 				covarEntity.setColumnIndex(col);
 				covarEntity.setRowIndex(row);
 				covarEntity.setValue(covars[row][col]);
+				covarEntity.setUser(user);
 				covarEntities.add(covarEntity);
 				covarDao.save(covarEntity);
 			}
@@ -150,7 +152,7 @@ public class MatrixAssemblerServiceImpl implements MatrixAssemblerService {
 	}
 
 	@Override
-	public Set<MeanEntity> createMeanEntity(double[][] means) {
+	public Set<MeanEntity> createMeanEntity(double[][] means, UserEntity user) {
 		Set<MeanEntity> meanEntities = new HashSet<MeanEntity>();
 		MeanEntity meanEntity = new MeanEntity();
 		for (int row = 0; row < means.length; row++) {
@@ -158,6 +160,7 @@ public class MatrixAssemblerServiceImpl implements MatrixAssemblerService {
 				meanEntity.setColumnIndex(col);
 				meanEntity.setRowIndex(row);
 				meanEntity.setValue(means[row][col]);
+				meanEntity.setUser(user);
 				meanEntities.add(meanEntity);
 				meanDao.save(meanEntity);
 			}
@@ -166,12 +169,13 @@ public class MatrixAssemblerServiceImpl implements MatrixAssemblerService {
 	}
 
 	@Override
-	public Set<WeightEntity> createWeightEntity(double[] weights) {
+	public Set<WeightEntity> createWeightEntity(double[] weights, UserEntity user) {
 		Set<WeightEntity> weightEntities = new HashSet<WeightEntity>();
 		WeightEntity weightEntity = new WeightEntity();
 		for (int element = 0; element < weights.length; element++) {
 			weightEntity.setIndex(element);
 			weightEntity.setValue(weights[element]);
+			weightEntity.setUser(user);
 			weightEntities.add(weightEntity);
 			weightDao.save(weightEntity);
 		}
