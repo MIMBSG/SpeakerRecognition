@@ -3,6 +3,8 @@ package speakerrecognition.entities;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -12,7 +14,8 @@ import javax.persistence.Table;
 @Table(name = "weight")
 public class WeightEntity {
 	@Id
-	@Column(name = "id", unique = true, nullable = false)
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "id", nullable = false)
 	private int id;
 
 	@Column(name = "index")
@@ -22,13 +25,17 @@ public class WeightEntity {
 	private Double value;
 
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "user", nullable = false, insertable = false, updatable = false)
+	@JoinColumn(name = "user")
 	private UserEntity user;
 
 	public WeightEntity(int index, Double value) {
 		super();
 		this.index = index;
 		this.value = value;
+	}
+
+	public WeightEntity() {
+		super();
 	}
 
 	public int getId() {

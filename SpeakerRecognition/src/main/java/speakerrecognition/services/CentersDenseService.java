@@ -17,7 +17,8 @@ public class CentersDenseService {
 						samplesNum += 1;
 					}
 				}
-				sum[k] /= samplesNum;
+				if (samplesNum != 0)
+					sum[k] /= samplesNum;
 			}
 			for (int i = 0; i < nClusters; i++) {
 				result[i][j] = sum[i];

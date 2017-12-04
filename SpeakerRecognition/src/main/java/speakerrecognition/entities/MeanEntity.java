@@ -3,6 +3,8 @@ package speakerrecognition.entities;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -12,7 +14,8 @@ import javax.persistence.Table;
 @Table(name = "mean")
 public class MeanEntity {
 	@Id
-	@Column(name = "id", unique = true, nullable = false)
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "id", nullable = false)
 	private int id;
 
 	@Column(name = "rowIndex")
@@ -25,7 +28,7 @@ public class MeanEntity {
 	private Double value;
 
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "user", nullable = false, insertable = false, updatable = false)
+	@JoinColumn(name = "user")
 	private UserEntity user;
 
 	public MeanEntity(int rowIndex, int columnIndex, Double value) {
@@ -33,6 +36,10 @@ public class MeanEntity {
 		this.rowIndex = rowIndex;
 		this.columnIndex = columnIndex;
 		this.value = value;
+	}
+
+	public MeanEntity() {
+		super();
 	}
 
 	public int getId() {

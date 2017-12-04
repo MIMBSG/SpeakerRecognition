@@ -31,9 +31,9 @@ public class UserRestService {
 		this.speakerRecognitionService = speakerRecognitionService;
 	}
 
-	@RequestMapping(value = "/register/{samples},{name},{lastName}", method = RequestMethod.POST)
+	@RequestMapping(value = "/register/{samples}/{name}/{lastName}", method = RequestMethod.POST)
 	@ResponseBody
-	public UserTO registerUser(@PathVariable double[] samples, String name, String lastName)
+	public UserTO registerUser(@PathVariable double[] samples, @PathVariable String name, @PathVariable String lastName)
 			throws MfccServiceException, MatrixesServiceException, StatisticsServiceException {
 		return UserMapper.map(speakerModelService.creatorSpeakerModel(samples, name, lastName));
 	}

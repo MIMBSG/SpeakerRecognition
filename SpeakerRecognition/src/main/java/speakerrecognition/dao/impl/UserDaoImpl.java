@@ -1,7 +1,5 @@
 package speakerrecognition.dao.impl;
 
-import java.util.List;
-
 import javax.persistence.TypedQuery;
 
 import org.springframework.stereotype.Repository;
@@ -16,13 +14,13 @@ public class UserDaoImpl extends AbstractDao<UserEntity, Long> implements UserDa
 
 	}
 
-	public List<UserEntity> getById(int id) {
+	public UserEntity getById(int id) {
 		TypedQuery<UserEntity> query = entityManager.createQuery("select user from UserEntity user where user.id = :id",
 				UserEntity.class);
 
 		query.setParameter("id", id);
 
-		return query.getResultList();
+		return query.getSingleResult();
 	}
 
 }

@@ -24,7 +24,7 @@ public class LabelsInertiaCalculatorServiceImpl implements LabelsInertiaCalculat
 		double[] labels = new double[rowsInMatrix];
 		labels = matrixesService.vectorAddScalar(labels, (double) -1);
 		double[] minDistances = new double[rowsInMatrix];
-		minDistances = matrixesService.vectorAddScalar(minDistances, Double.POSITIVE_INFINITY);
+		minDistances = matrixesService.vectorAddScalar(minDistances, Double.MAX_VALUE);
 
 		for (int numOfCenterEl = 0; numOfCenterEl < elementsInCenters; numOfCenterEl++) {
 			double[] rowOfAllDistances = allDistances[numOfCenterEl];
@@ -33,7 +33,7 @@ public class LabelsInertiaCalculatorServiceImpl implements LabelsInertiaCalculat
 				if (rowOfAllDistances[numOfEl] < minDistances[numOfEl]) {
 					labels[numOfEl] = numOfCenterEl;
 				}
-				minDistances[numOfEl] = Math.min(distances[numOfEl], minDistances[numOfEl]);
+				minDistances[numOfEl] = Math.min(rowOfAllDistances[numOfEl], minDistances[numOfEl]);
 			}
 		}
 		if (rowsInMatrix == distances.length)

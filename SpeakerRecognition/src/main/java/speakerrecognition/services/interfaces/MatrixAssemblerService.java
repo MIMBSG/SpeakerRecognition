@@ -1,6 +1,5 @@
 package speakerrecognition.services.interfaces;
 
-import java.util.List;
 import java.util.Set;
 
 import speakerrecognition.entities.CovarEntity;
