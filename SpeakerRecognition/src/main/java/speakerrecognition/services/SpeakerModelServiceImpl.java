@@ -1,16 +1,11 @@
 package speakerrecognition.services;
 
-import java.util.Set;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import speakerrecognition.dao.UserDao;
-import speakerrecognition.entities.CovarEntity;
-import speakerrecognition.entities.MeanEntity;
 import speakerrecognition.entities.UserEntity;
-import speakerrecognition.entities.WeightEntity;
 import speakerrecognition.exceptions.MatrixesServiceException;
 import speakerrecognition.exceptions.MfccServiceException;
 import speakerrecognition.exceptions.StatisticsServiceException;

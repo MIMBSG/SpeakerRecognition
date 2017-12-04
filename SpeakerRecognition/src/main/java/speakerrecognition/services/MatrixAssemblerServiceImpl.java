@@ -1,6 +1,5 @@
 package speakerrecognition.services;
 
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
@@ -135,50 +134,42 @@ public class MatrixAssemblerServiceImpl implements MatrixAssemblerService {
 	}
 
 	@Override
-	public Set<CovarEntity> createCovarEntity(double[][] covars, UserEntity user) {
-		Set<CovarEntity> covarEntities = new HashSet<CovarEntity>();
-		CovarEntity covarEntity = new CovarEntity();
+	public void createCovarEntity(double[][] covars, UserEntity user) {
+
 		for (int row = 0; row < covars.length; row++) {
 			for (int col = 0; col < covars[0].length; col++) {
+				CovarEntity covarEntity = new CovarEntity();
 				covarEntity.setColumnIndex(col);
 				covarEntity.setRowIndex(row);
 				covarEntity.setValue(covars[row][col]);
 				covarEntity.setUser(user);
-				covarEntities.add(covarEntity);
 				covarDao.save(covarEntity);
 			}
 		}
-		return covarEntities;
 	}
 
 	@Override
-	public Set<MeanEntity> createMeanEntity(double[][] means, UserEntity user) {
-		Set<MeanEntity> meanEntities = new HashSet<MeanEntity>();
-		MeanEntity meanEntity = new MeanEntity();
+	public void createMeanEntity(double[][] means, UserEntity user) {
 		for (int row = 0; row < means.length; row++) {
 			for (int col = 0; col < means[0].length; col++) {
+				MeanEntity meanEntity = new MeanEntity();
 				meanEntity.setColumnIndex(col);
 				meanEntity.setRowIndex(row);
 				meanEntity.setValue(means[row][col]);
 				meanEntity.setUser(user);
-				meanEntities.add(meanEntity);
 				meanDao.save(meanEntity);
 			}
 		}
-		return meanEntities;
 	}
 
 	@Override
-	public Set<WeightEntity> createWeightEntity(double[] weights, UserEntity user) {
-		Set<WeightEntity> weightEntities = new HashSet<WeightEntity>();
-		WeightEntity weightEntity = new WeightEntity();
+	public void createWeightEntity(double[] weights, UserEntity user) {
 		for (int element = 0; element < weights.length; element++) {
+			WeightEntity weightEntity = new WeightEntity();
 			weightEntity.setIndex(element);
 			weightEntity.setValue(weights[element]);
 			weightEntity.setUser(user);
-			weightEntities.add(weightEntity);
 			weightDao.save(weightEntity);
 		}
-		return weightEntities;
 	}
 }
