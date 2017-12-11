@@ -38,7 +38,7 @@ public class KmeansSingleServiceImpl implements KmeansSingleService {
 					distances);
 			distances = labelsInertiaDistances.getDistances();
 
-			centers = centersDense.centersDense(data, labelsInertiaDistances.getDistances(), nClusters, distances);
+			centers = centersDense.centersDense(data, labelsInertiaDistances.getLabels(), nClusters, distances);
 
 			if (labelsInertiaDistances.getInertia() < bestInertia) {
 				bestLabels = labelsInertiaDistances.getLabels().clone();

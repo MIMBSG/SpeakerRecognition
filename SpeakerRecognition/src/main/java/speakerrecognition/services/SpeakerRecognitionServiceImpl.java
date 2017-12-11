@@ -29,7 +29,7 @@ public class SpeakerRecognitionServiceImpl implements SpeakerRecognitionService 
 	@Autowired
 	UserDao userDao;
 
-	private static final int FREQUENCY = 44100;
+	private static final int FREQUENCY = 16000;// 44100
 
 	@Override
 	public UserEntity recognizing(double[] samples)
@@ -37,7 +37,7 @@ public class SpeakerRecognitionServiceImpl implements SpeakerRecognitionService 
 
 		MfccParameters mfcc = mfccService.extractMfcc(samples, FREQUENCY);
 		List<UserEntity> users = userDao.findAll();
-		double score = 0;
+		double score = Double.NEGATIVE_INFINITY;
 		UserEntity winner = new UserEntity();
 		for (UserEntity user : users) {
 			double[][] covars = matrixAssemblerService.createCovarMatrix(user.getCovars());

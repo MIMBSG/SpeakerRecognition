@@ -541,7 +541,7 @@ public class MatrixesService {
 	public double[] sumsOfElementsInCols(double[][] matrix) {
 		int rows = matrix.length;
 		int cols = matrix[0].length;
-		double[] vectorToReturn = new double[rows];
+		double[] vectorToReturn = new double[cols];
 		for (int numOfCol = 0; numOfCol < cols; numOfCol++) {
 			for (int numOfRow = 0; numOfRow < rows; numOfRow++) {
 				vectorToReturn[numOfCol] += matrix[numOfRow][numOfCol];
@@ -932,10 +932,21 @@ public class MatrixesService {
 
 	public double[] logSumExp(double[][] data) throws MatrixesServiceException {
 		double[] maxValues = maxInCol(transposeMatrix(data));
-		double[] vectorToReturn = makeLogarithmInVector(sumsOfElementsInRows(
+		double[] vectorToReturn = makeLogarithmInVector(sumsOfElementsInCols(
 				eulerNumberToMatrixElementsPower(matrixSubstractVector(transposeMatrix(data), maxValues))));
 		vectorToReturn = vectorAddVector(vectorToReturn, maxValues);
 		return vectorToReturn;
+	}
+
+	public double[] cumulatedSumOfElements(double[] vector) {
+		int numOfElements = vector.length;
+		double[] cumSumOfElements = new double[numOfElements];
+		for (int i = 0; i < numOfElements; i++) {
+			for (int j = 0; j < i + 1; j++) {
+				cumSumOfElements[i] += vector[j];
+			}
+		}
+		return cumSumOfElements;
 	}
 
 	public double[][] eulerNumberToMatrixElementsPower(double[][] matrix) {

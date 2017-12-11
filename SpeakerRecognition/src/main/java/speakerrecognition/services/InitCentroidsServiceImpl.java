@@ -27,8 +27,7 @@ public class InitCentroidsServiceImpl implements InitCentroidsService {
 		double currentPot = matrixesService.sumOfVectorElements(closestDistSq);
 		for (int c = 1; c < nClusters; c++) {
 			double[] randVals = matrixesService.generateRandomVector(currentPot, nLocalTrials);
-			double[] closestDistSqCumsum = matrixesService.fillVectorWithScalar(closestDistSq,
-					matrixesService.sumOfVectorElements(closestDistSq));
+			double[] closestDistSqCumsum = matrixesService.cumulatedSumOfElements(closestDistSq);
 			int[] candidateIds = matrixesService.searchSorted(closestDistSqCumsum, randVals);
 			double[][] dataCandidates = new double[nLocalTrials][data[0].length];
 			for (int z = 0; z < nLocalTrials; z++) {

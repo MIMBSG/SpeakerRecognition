@@ -24,9 +24,10 @@ public class KmeansServiceImpl implements KmeansService {
 	private static final int MAX_ITER = 300;
 
 	@Override
-	public KmeansResult fit(double[][] observations, int numOfComponents)
+	public KmeansResult fit(double[][] mfcc, int numOfComponents)
 			throws StatisticsServiceException, MatrixesServiceException {
-
+		
+		double[][] observations = new double[mfcc.length][mfcc[0].length];
 		double[][] clusterCenters;
 		double inertia;
 		double[][] bestClusterCenters = new double[numOfComponents][observations[0].length];
@@ -35,10 +36,10 @@ public class KmeansServiceImpl implements KmeansService {
 		int numOfCols = observations[0].length;
 		double bestInertia = Double.MAX_VALUE;
 
-		double[] matrixMean = statService.getMean2(observations);
+		double[] matrixMean = statService.getMean2(mfcc);
 		for (int i = 0; i < numOfRows; i++) {
 			for (int j = 0; j < numOfCols; j++) {
-				observations[i][j] -= matrixMean[j];
+				observations[i][j] = mfcc[i][j] - matrixMean[j];
 			}
 		}
 

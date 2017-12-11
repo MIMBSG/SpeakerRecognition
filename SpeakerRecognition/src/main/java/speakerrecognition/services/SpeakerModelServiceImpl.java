@@ -29,8 +29,8 @@ public class SpeakerModelServiceImpl implements SpeakerModelService {
 	@Autowired
 	UserDao userDao;
 
-	private static final int FREQUENCY = 44100;
-	private static final int NUM_OF_MIXTURES = 8;
+	private static final int FREQUENCY = 16000;//44100
+	private static final int NUM_OF_MIXTURES = 32;//8
 
 	@Override
 	public UserEntity creatorSpeakerModel(double[] samples, String name, String lastName)
@@ -45,5 +45,4 @@ public class SpeakerModelServiceImpl implements SpeakerModelService {
 		userDao.save(userEntity);
 		return userDao.getById(userEntity.getId());
 	}
-
 }

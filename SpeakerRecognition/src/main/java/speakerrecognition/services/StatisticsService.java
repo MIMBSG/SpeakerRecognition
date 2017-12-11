@@ -11,8 +11,8 @@ import speakerrecognition.exceptions.StatisticsServiceException;
 
 @Service
 public class StatisticsService {
-	private static final String nullPointerError = "Data cannot be null!";
-	private static final String wrongMatrixSizeError = "Row sizes do not match!";
+	private static final String NULL_POINTER_ERROR = "Data cannot be null!";
+	private static final String WRONG_MATRIX_SIZE_ERROR = "Row sizes do not match!";
 
 	/**
 	 * average value of vector
@@ -126,16 +126,16 @@ public class StatisticsService {
 
 	private void nullPointerCheckMatrix(double[][] data) throws StatisticsServiceException {
 		if (data == null) {
-			throw new StatisticsServiceException(nullPointerError);
+			throw new StatisticsServiceException(NULL_POINTER_ERROR);
 		}
 		if (data[0] == null) {
-			throw new StatisticsServiceException(nullPointerError);
+			throw new StatisticsServiceException(NULL_POINTER_ERROR);
 		}
 	}
 
 	private void nullPointerCheckVector(double[] data) throws StatisticsServiceException {
 		if (data == null) {
-			throw new StatisticsServiceException(nullPointerError);
+			throw new StatisticsServiceException(NULL_POINTER_ERROR);
 		}
 	}
 
@@ -146,7 +146,7 @@ public class StatisticsService {
 				testLength = temp.length;
 			} else {
 				if (testLength != temp.length) {
-					throw new StatisticsServiceException(wrongMatrixSizeError);
+					throw new StatisticsServiceException(WRONG_MATRIX_SIZE_ERROR);
 				} else {
 					;// nie ma tu nic ciekawego
 				}
