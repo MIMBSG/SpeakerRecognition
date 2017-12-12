@@ -29,13 +29,11 @@ public class SpeakerRecognitionServiceImpl implements SpeakerRecognitionService 
 	@Autowired
 	UserDao userDao;
 
-	private static final int FREQUENCY = 16000;// 44100
-
 	@Override
-	public UserEntity recognizing(double[] samples)
+	public UserEntity recognizing(int frequency, double[] samples)
 			throws MfccServiceException, MatrixesServiceException, StatisticsServiceException {
 
-		MfccParameters mfcc = mfccService.extractMfcc(samples, FREQUENCY);
+		MfccParameters mfcc = mfccService.extractMfcc(samples, frequency);
 		List<UserEntity> users = userDao.findAll();
 		double score = Double.NEGATIVE_INFINITY;
 		UserEntity winner = new UserEntity();

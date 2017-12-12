@@ -31,17 +31,18 @@ public class UserRestService {
 		this.speakerRecognitionService = speakerRecognitionService;
 	}
 
-	@RequestMapping(value = "/register/{samples}/{name}/{lastName}", method = RequestMethod.POST)
+	@RequestMapping(value = "/register/{frequency}/{samples}/{name}/{lastName}", method = RequestMethod.POST)
 	@ResponseBody
-	public UserTO registerUser(@PathVariable double[] samples, @PathVariable String name, @PathVariable String lastName)
-			throws MfccServiceException, MatrixesServiceException, StatisticsServiceException {
-		return UserMapper.map(speakerModelService.creatorSpeakerModel(samples, name, lastName));
+	public UserTO registerUser(@PathVariable int frequency, @PathVariable double[] samples, @PathVariable String name,
+			@PathVariable String lastName)
+					throws MfccServiceException, MatrixesServiceException, StatisticsServiceException {
+		return UserMapper.map(speakerModelService.creatorSpeakerModel(frequency, samples, name, lastName));
 	}
 
-	@RequestMapping(value = "/recognition/{samples}", method = RequestMethod.POST)
+	@RequestMapping(value = "/recognition/{frequency}/{samples}", method = RequestMethod.POST)
 	@ResponseBody
-	public UserTO recognitionUser(@PathVariable double[] samples)
+	public UserTO recognitionUser(@PathVariable int frequency, @PathVariable double[] samples)
 			throws MfccServiceException, MatrixesServiceException, StatisticsServiceException {
-		return UserMapper.map(speakerRecognitionService.recognizing(samples));
+		return UserMapper.map(speakerRecognitionService.recognizing(frequency, samples));
 	}
 }

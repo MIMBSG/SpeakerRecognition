@@ -29,14 +29,13 @@ public class SpeakerModelServiceImpl implements SpeakerModelService {
 	@Autowired
 	UserDao userDao;
 
-	private static final int FREQUENCY = 16000;//44100
-	private static final int NUM_OF_MIXTURES = 32;//8
+	private static final int NUM_OF_MIXTURES = 32;
 
 	@Override
-	public UserEntity creatorSpeakerModel(double[] samples, String name, String lastName)
+	public UserEntity creatorSpeakerModel(int frequency, double[] samples, String name, String lastName)
 			throws MfccServiceException, MatrixesServiceException, StatisticsServiceException {
 
-		MfccParameters mfcc = mfccService.extractMfcc(samples, FREQUENCY);
+		MfccParameters mfcc = mfccService.extractMfcc(samples, frequency);
 		GmmResult gmm = gmmService.fit(mfcc.getMfccCoefs(), NUM_OF_MIXTURES);
 		UserEntity userEntity = new UserEntity(name, lastName);
 		matrixAssemblerService.createWeightEntity(gmm.getWeights(), userEntity);

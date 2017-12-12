@@ -25,7 +25,7 @@ public class MfccServiceImpl implements MfccService {
 	public MfccParameters extractMfcc(double[] samplesVector, int fs)
 			throws MfccServiceException, MatrixesServiceException {
 
-		int frameLen = 256;//setFrameLen(fs);
+		int frameLen = 256;// setFrameLen(fs);
 		int frameShift = setFrameShift(fs);
 		double[] windowVector = hamming(frameLen);
 		double[][] melfbCoeffs = melFilterBank(MELFILTER_BANDS, frameLen, fs);
@@ -58,7 +58,8 @@ public class MfccServiceImpl implements MfccService {
 
 			double[] dotProd = matrixService.matrixMultiplyByVector(melfbCoeffs, fftFinal);
 			for (int j = 0; j < dotProd.length; j++) {
-				dotProd[j] = Math.log(dotProd[j]);
+				if (dotProd[j] > 0)
+					dotProd[j] = Math.log(dotProd[j]);
 			}
 			double[][] d1Matrix = dctMatrix(MELFILTER_BANDS, MFCC_NUM);
 			dotProd = matrixService.matrixMultiplyByVector(d1Matrix, dotProd);
@@ -115,9 +116,9 @@ public class MfccServiceImpl implements MfccService {
 				yMeshgridMatrix[i][j] = i;
 			}
 		}
-		for(int i=0;i<size;i++){
-			for(int j=0;j<size;j++){
-				xMeshgridMatrix[i][j]=(xMeshgridMatrix[i][j]*2+1)*Math.PI/(2*size);
+		for (int i = 0; i < size; i++) {
+			for (int j = 0; j < size; j++) {
+				xMeshgridMatrix[i][j] = (xMeshgridMatrix[i][j] * 2 + 1) * Math.PI / (2 * size);
 			}
 		}
 		d1Matrix = matrixService.multiplyMatrixesElementByElement(xMeshgridMatrix, yMeshgridMatrix);

@@ -7,6 +7,6 @@ import speakerrecognition.exceptions.StatisticsServiceException;
 
 public interface SpeakerRecognitionService {
 
-	UserEntity recognizing(double[] samples)
+	UserEntity recognizing(int frequency, double[] samples)
 			throws MfccServiceException, MatrixesServiceException, StatisticsServiceException;
 }
