@@ -4,6 +4,6 @@ import speakerrecognition.exceptions.MatrixesServiceException;
 
 public interface LogProbabilityCalculatorService {
 
-	public double[][] logMultivariateNormalDensity(double[][] mfcc, double[][] means, double[][] covars)
+	public double[][] logMultivariateNormalDistribution(double[][] mfcc, double[][] means, double[][] covars)
 			throws MatrixesServiceException;
 }

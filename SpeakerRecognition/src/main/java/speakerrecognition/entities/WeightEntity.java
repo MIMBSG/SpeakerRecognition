@@ -18,8 +18,8 @@ public class WeightEntity {
 	@Column(name = "id", nullable = false)
 	private int id;
 
-	@Column(name = "index")
-	private int index;
+	@Column(name = "vecIndex")
+	private int vecIndex;
 
 	@Column(name = "value")
 	private Double value;
@@ -28,10 +28,11 @@ public class WeightEntity {
 	@JoinColumn(name = "user")
 	private UserEntity user;
 
-	public WeightEntity(int index, Double value) {
+	public WeightEntity(int vecIndex, Double value, UserEntity user) {
 		super();
-		this.index = index;
+		this.vecIndex = vecIndex;
 		this.value = value;
+		this.user = user;
 	}
 
 	public WeightEntity() {
@@ -46,12 +47,12 @@ public class WeightEntity {
 		this.id = id;
 	}
 
-	public int getIndex() {
-		return index;
+	public int getVecIndex() {
+		return vecIndex;
 	}
 
-	public void setIndex(int index) {
-		this.index = index;
+	public void setVecIndex(int vecIndex) {
+		this.vecIndex = vecIndex;
 	}
 
 	public Double getValue() {

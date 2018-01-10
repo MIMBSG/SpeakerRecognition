@@ -19,7 +19,7 @@ public class ScoreSamplesServiceImpl implements ScoreSamplesService {
 	public ScoreSamples getScoreSamples(double[][] mfcc, double[][] means, double[][] covars, double[] weights,
 			int numberOfComponents) throws MatrixesServiceException {
 
-		double[][] lpr = lprService.logMultivariateNormalDensity(mfcc, means, covars);
+		double[][] lpr = lprService.logMultivariateNormalDistribution(mfcc, means, covars);
 		lpr = matrix.matrixAddVector(lpr, matrix.makeLogarithmInVector(weights));
 		double[] logprob = matrix.logSumExp(lpr);
 		double[][] responsibilities = matrix

@@ -59,7 +59,7 @@ public class KmeansServiceImpl implements KmeansService {
 		return new KmeansResult(bestClusterCenters);
 	}
 
-	private double computeTolerance(double[][] x) throws StatisticsServiceException {
+	double computeTolerance(double[][] x) throws StatisticsServiceException {
 		double tol = 0.0001;
 		double temp[] = statService.getVariance2(x);
 

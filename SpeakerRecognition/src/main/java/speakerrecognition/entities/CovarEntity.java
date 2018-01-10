@@ -31,11 +31,12 @@ public class CovarEntity {
 	@JoinColumn(name = "user")
 	private UserEntity user;
 
-	public CovarEntity(int rowIndex, int columnIndex, Double value) {
+	public CovarEntity(int rowIndex, int columnIndex, Double value, UserEntity user) {
 		super();
 		this.rowIndex = rowIndex;
 		this.columnIndex = columnIndex;
 		this.value = value;
+		this.user = user;
 	}
 
 	public CovarEntity() {

@@ -83,7 +83,7 @@ public class LogProbabilityCalculatorServiceImplTest {
 		Mockito.when(matrixesService.matrixMultiplyByScalar(Mockito.any(double[][].class), Mockito.anyDouble()))
 				.thenReturn(logProbability);
 		// given
-		double[][] resultLogProbability = logProbabilityCalculatorServiceImpl.logMultivariateNormalDensity(mfcc, means,
+		double[][] resultLogProbability = logProbabilityCalculatorServiceImpl.logMultivariateNormalDistribution(mfcc, means,
 				covars);
 		// then
 		for (int i = 0; i < resultLogProbability.length; i++) {

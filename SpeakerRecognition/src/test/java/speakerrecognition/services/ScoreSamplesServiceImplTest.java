@@ -36,7 +36,7 @@ public class ScoreSamplesServiceImplTest {
 		double[] logProb = new double[2];
 		double[][] responsibilities = new double[2][2];
 
-		Mockito.when(lprService.logMultivariateNormalDensity(Mockito.any(double[][].class),
+		Mockito.when(lprService.logMultivariateNormalDistribution(Mockito.any(double[][].class),
 				Mockito.any(double[][].class), Mockito.eq(covars))).thenReturn(logProbabilities);
 		Mockito.when(matrixesService.makeLogarithmInVector(Mockito.any(double[].class))).thenReturn(weights);
 		Mockito.when(matrixesService.matrixAddVector(Mockito.any(double[][].class), Mockito.any(double[].class)))

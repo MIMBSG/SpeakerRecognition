@@ -67,7 +67,7 @@ public class MatrixAssemblerServiceImpl implements MatrixAssemblerService {
 		Iterator<WeightEntity> iterator = weight.iterator();
 		while (iterator.hasNext()) {
 			WeightEntity weightEntity = iterator.next();
-			int numOfEl = weightEntity.getIndex();
+			int numOfEl = weightEntity.getVecIndex();
 			weightVec[numOfEl] = weightEntity.getValue();
 		}
 		return weightVec;
@@ -126,8 +126,8 @@ public class MatrixAssemblerServiceImpl implements MatrixAssemblerService {
 		Iterator<WeightEntity> iterator = weight.iterator();
 		while (iterator.hasNext()) {
 			WeightEntity weightEntity = iterator.next();
-			if (weightEntity.getIndex() > elements) {
-				elements = weightEntity.getIndex();
+			if (weightEntity.getVecIndex() > elements) {
+				elements = weightEntity.getVecIndex();
 			}
 		}
 		return elements + 1;
@@ -138,11 +138,7 @@ public class MatrixAssemblerServiceImpl implements MatrixAssemblerService {
 
 		for (int row = 0; row < covars.length; row++) {
 			for (int col = 0; col < covars[0].length; col++) {
-				CovarEntity covarEntity = new CovarEntity();
-				covarEntity.setColumnIndex(col);
-				covarEntity.setRowIndex(row);
-				covarEntity.setValue(covars[row][col]);
-				covarEntity.setUser(user);
+				CovarEntity covarEntity = new CovarEntity(row, col, covars[row][col], user);
 				covarDao.save(covarEntity);
 			}
 		}
@@ -152,11 +148,7 @@ public class MatrixAssemblerServiceImpl implements MatrixAssemblerService {
 	public void createMeanEntity(double[][] means, UserEntity user) {
 		for (int row = 0; row < means.length; row++) {
 			for (int col = 0; col < means[0].length; col++) {
-				MeanEntity meanEntity = new MeanEntity();
-				meanEntity.setColumnIndex(col);
-				meanEntity.setRowIndex(row);
-				meanEntity.setValue(means[row][col]);
-				meanEntity.setUser(user);
+				MeanEntity meanEntity = new MeanEntity(row, col, means[row][col], user);
 				meanDao.save(meanEntity);
 			}
 		}
@@ -165,10 +157,7 @@ public class MatrixAssemblerServiceImpl implements MatrixAssemblerService {
 	@Override
 	public void createWeightEntity(double[] weights, UserEntity user) {
 		for (int element = 0; element < weights.length; element++) {
-			WeightEntity weightEntity = new WeightEntity();
-			weightEntity.setIndex(element);
-			weightEntity.setValue(weights[element]);
-			weightEntity.setUser(user);
+			WeightEntity weightEntity = new WeightEntity(element, weights[element], user);
 			weightDao.save(weightEntity);
 		}
 	}

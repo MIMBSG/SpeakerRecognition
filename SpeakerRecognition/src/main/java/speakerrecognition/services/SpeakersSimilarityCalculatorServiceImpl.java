@@ -9,7 +9,7 @@ import speakerrecognition.pojos.SpeakerModel;
 import speakerrecognition.services.interfaces.SpeakersSimilarytyCalculatorService;
 
 @Service
-public class SpeakersSimilarytyCalculatorServiceImpl implements SpeakersSimilarytyCalculatorService {
+public class SpeakersSimilarityCalculatorServiceImpl implements SpeakersSimilarytyCalculatorService {
 
 	@Autowired
 	private MatrixesService matrixesService;
@@ -28,7 +28,7 @@ public class SpeakersSimilarytyCalculatorServiceImpl implements SpeakersSimilary
 		double[][] covars = speakerModel.getCovars();
 		double[] weights = speakerModel.getWeights();
 
-		double[][] logProbabilities = lprService.logMultivariateNormalDensity(mfcc, means, covars);
+		double[][] logProbabilities = lprService.logMultivariateNormalDistribution(mfcc, means, covars);
 		weights = matrixesService.makeLogarithmInVector(weights);
 		logProbabilities = matrixesService.matrixAddVector(logProbabilities, weights);
 		double[] logProb = matrixesService.logSumExp(logProbabilities);

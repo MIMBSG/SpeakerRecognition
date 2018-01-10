@@ -87,7 +87,7 @@ public class GmmServiceImpl implements GmmService {
 		return new GmmResult(finalMeans, finalCovars, finalWeights);
 	}
 
-	private GmmResult doMstep(double[][] data, double[][] responsibilities, double[][] means, double[][] covars,
+	GmmResult doMstep(double[][] data, double[][] responsibilities, double[][] means, double[][] covars,
 			double[] weights) throws MatrixesServiceException {
 		double[] tempWeights = matrixService.sumsOfElementsInCols(responsibilities);
 		double[][] weightedXSum = matrixService.matrixMultiplyByMatrix(matrixService.transposeMatrix(responsibilities),
@@ -102,8 +102,8 @@ public class GmmServiceImpl implements GmmService {
 		return new GmmResult(means, covars, weights);
 	}
 
-	private double[][] covarMstepDiag(double[][] means, double[][] X, double[][] responsibilities,
-			double[][] weightedXSum, double[] norm, double minCovar) throws MatrixesServiceException {
+	double[][] covarMstepDiag(double[][] means, double[][] X, double[][] responsibilities, double[][] weightedXSum,
+			double[] norm, double minCovar) throws MatrixesServiceException {
 		double[][] covarDiagToReturn = null;
 		double[][] avgX2 = matrixService.matrixMultiplyByVectorElByEl(
 				matrixService.matrixMultiplyByMatrix(matrixService.transposeMatrix(responsibilities),

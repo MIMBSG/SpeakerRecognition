@@ -31,11 +31,12 @@ public class MeanEntity {
 	@JoinColumn(name = "user")
 	private UserEntity user;
 
-	public MeanEntity(int rowIndex, int columnIndex, Double value) {
+	public MeanEntity(int rowIndex, int columnIndex, Double value, UserEntity user) {
 		super();
 		this.rowIndex = rowIndex;
 		this.columnIndex = columnIndex;
 		this.value = value;
+		this.user = user;
 	}
 
 	public MeanEntity() {

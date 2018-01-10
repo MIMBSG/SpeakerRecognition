@@ -38,9 +38,9 @@ public class SpeakerModelServiceImpl implements SpeakerModelService {
 		MfccParameters mfcc = mfccService.extractMfcc(samples, frequency);
 		GmmResult gmm = gmmService.fit(mfcc.getMfccCoefs(), NUM_OF_MIXTURES);
 		UserEntity userEntity = new UserEntity(name, lastName);
-		matrixAssemblerService.createWeightEntity(gmm.getWeights(), userEntity);
 		matrixAssemblerService.createCovarEntity(gmm.getCovars(), userEntity);
 		matrixAssemblerService.createMeanEntity(gmm.getMeans(), userEntity);
+		matrixAssemblerService.createWeightEntity(gmm.getWeights(), userEntity);
 		userDao.save(userEntity);
 		return userDao.getById(userEntity.getId());
 	}

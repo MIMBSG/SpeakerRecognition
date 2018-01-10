@@ -25,7 +25,7 @@ public class MfccServiceImpl implements MfccService {
 	public MfccParameters extractMfcc(double[] samplesVector, int fs)
 			throws MfccServiceException, MatrixesServiceException {
 
-		int frameLen = 256;// setFrameLen(fs);
+		int frameLen = setFrameLen(fs);
 		int frameShift = setFrameShift(fs);
 		double[] windowVector = hamming(frameLen);
 		double[][] melfbCoeffs = melFilterBank(MELFILTER_BANDS, frameLen, fs);
@@ -70,8 +70,7 @@ public class MfccServiceImpl implements MfccService {
 		return result;
 	}
 
-	@Override
-	public double[] arrange(int lowLimit, int highLimit) throws MfccServiceException {
+	double[] arrange(int lowLimit, int highLimit) throws MfccServiceException {
 		arrayLimitCheck(lowLimit, highLimit);
 		double[] result = new double[highLimit - lowLimit];
 		for (int i = 0; i < result.length; i++) {
@@ -81,8 +80,7 @@ public class MfccServiceImpl implements MfccService {
 		return result;
 	}
 
-	@Override
-	public double energyOfVector(double[] vector) {
+	double energyOfVector(double[] vector) {
 		double energy = 0;
 		for (int i = 0; i < vector.length; i++) {
 			energy = energy + Math.pow(vector[i], 2);
@@ -90,8 +88,7 @@ public class MfccServiceImpl implements MfccService {
 		return energy;
 	}
 
-	@Override
-	public double[] preemphasis(double[] vector, double preEmph) {
+	double[] preemphasis(double[] vector, double preEmph) {
 		double[] tempVector = new double[vector.length];
 		tempVector[0] = vector[0];
 		for (int i = 1; i < vector.length; i++) {
@@ -100,8 +97,7 @@ public class MfccServiceImpl implements MfccService {
 		return tempVector;
 	}
 
-	@Override
-	public double[][] dctMatrix(int size, int mfccNum) throws MatrixesServiceException {
+	double[][] dctMatrix(int size, int mfccNum) throws MatrixesServiceException {
 
 		double[][] d1Matrix = new double[size][size];
 		double[][] xMeshgridMatrix = new double[size][size];
@@ -140,8 +136,7 @@ public class MfccServiceImpl implements MfccService {
 		return resultMatrix;
 	}
 
-	@Override
-	public double[][] melFilterBank(int numOfFilterBanks, int fftLength, int sampleRate) throws MfccServiceException {
+	double[][] melFilterBank(int numOfFilterBanks, int fftLength, int sampleRate) throws MfccServiceException {
 		double f0 = 700 / (double) sampleRate;
 		int fn2 = (int) Math.floor((double) fftLength / 2);
 		double lr = Math.log((double) 1 + 0.5 / f0) / (numOfFilterBanks + 1);
@@ -210,7 +205,7 @@ public class MfccServiceImpl implements MfccService {
 		return matrix;
 	}
 
-	private double[] hamming(int frameLen) {
+	double[] hamming(int frameLen) {
 		double[] windowTemp = new double[frameLen];
 		for (int i = 0; i < windowTemp.length; i++) {
 			windowTemp[i] = 0.54 - 0.46 * Math.cos(2 * Math.PI / (double) frameLen * ((double) i + 0.5));
@@ -218,15 +213,15 @@ public class MfccServiceImpl implements MfccService {
 		return windowTemp;
 	}
 
-	private int setFrameLen(int sampleRate) {
+	int setFrameLen(int sampleRate) {
 		return (int) (0.025 * (double) (sampleRate));
 	}
 
-	private int setFrameShift(int sampleRate) {
+	int setFrameShift(int sampleRate) {
 		return (int) (0.0125 * (double) (sampleRate));
 	}
 
-	private void arrayLimitCheck(int low, int high) throws MfccServiceException {
+	void arrayLimitCheck(int low, int high) throws MfccServiceException {
 		if (low > high) {
 			throw new MfccServiceException(wrongLimitsError);
 		}

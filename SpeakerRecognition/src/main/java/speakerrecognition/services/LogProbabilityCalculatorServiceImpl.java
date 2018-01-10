@@ -13,7 +13,7 @@ public class LogProbabilityCalculatorServiceImpl implements LogProbabilityCalcul
 	private MatrixesService matrixesService;
 
 	@Override
-	public double[][] logMultivariateNormalDensity(double[][] mfcc, double[][] means, double[][] covars)
+	public double[][] logMultivariateNormalDistribution(double[][] mfcc, double[][] means, double[][] covars)
 			throws MatrixesServiceException {
 
 		int rowsOfMFCC = mfcc.length;

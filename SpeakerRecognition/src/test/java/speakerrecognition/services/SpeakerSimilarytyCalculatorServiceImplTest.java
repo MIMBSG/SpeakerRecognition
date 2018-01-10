@@ -25,7 +25,7 @@ public class SpeakerSimilarytyCalculatorServiceImplTest {
 	private LogProbabilityCalculatorServiceImpl lprService;
 
 	@InjectMocks
-	private SpeakersSimilarytyCalculatorServiceImpl speakerSimilarytyCalculatorServiceImpl;
+	private SpeakersSimilarityCalculatorServiceImpl speakerSimilarytyCalculatorServiceImpl;
 
 	@Test
 	public void dummyTest() throws MatrixesServiceException, StatisticsServiceException {
@@ -41,7 +41,7 @@ public class SpeakerSimilarytyCalculatorServiceImplTest {
 
 		double expected = 500;
 
-		Mockito.when(lprService.logMultivariateNormalDensity(Mockito.any(double[][].class),
+		Mockito.when(lprService.logMultivariateNormalDistribution(Mockito.any(double[][].class),
 				Mockito.any(double[][].class), Mockito.eq(covars))).thenReturn(logProbabilities);
 		Mockito.doReturn(weights).when(matrixesService).makeLogarithmInVector(Mockito.any(double[].class));
 		Mockito.when(matrixesService.matrixAddVector(Mockito.any(double[][].class), Mockito.any(double[].class)))
@@ -54,7 +54,7 @@ public class SpeakerSimilarytyCalculatorServiceImplTest {
 
 		/// then
 		Assert.assertEquals(expected, score, 0.1);
-		Mockito.verify(lprService, Mockito.times(1)).logMultivariateNormalDensity(Mockito.any(double[][].class),
+		Mockito.verify(lprService, Mockito.times(1)).logMultivariateNormalDistribution(Mockito.any(double[][].class),
 				Mockito.any(double[][].class), Mockito.eq(covars));
 
 	}
