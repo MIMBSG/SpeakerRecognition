@@ -49,7 +49,7 @@ export class RecorderComponent {
             document.getElementById('message').innerHTML = "Recognizing...";
             this.speakerModelService.readAndSendFile(blob,null).then(function(result){
                 if(typeof(result)!="string"){
-                  scope.speakerResponse = result;
+                  scope.speakerResponse = JSON.parse(JSON.stringify(result));
                   console.log(result);
                   if(scope.speakerResponse[0].name == "NotFound"){
                     document.getElementById('message').innerHTML = "Speaker not found, try again. The closest speakers: <br>"
@@ -69,7 +69,7 @@ export class RecorderComponent {
             document.getElementById('message').innerHTML = "Register...";
             this.speakerModelService.readAndSendFile(blob,scope.speakerModel).then(function(result){
                 if(typeof(result)!="string"){
-                  scope.speakerModel = result;
+                  scope.speakerModel = JSON.parse(JSON.stringify(result));
                   document.getElementById('message').innerHTML = "Registered in database as " + scope.speakerModel.name + " " + scope.speakerModel.lastName + " !";
                   scope.speakerModelService.setSpeaker(null);
                 }
