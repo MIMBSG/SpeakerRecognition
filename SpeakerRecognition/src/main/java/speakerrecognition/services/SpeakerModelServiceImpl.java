@@ -7,7 +7,6 @@ import org.springframework.transaction.annotation.Transactional;
 import speakerrecognition.dao.UserDao;
 import speakerrecognition.entities.UserEntity;
 import speakerrecognition.exceptions.MatrixesServiceException;
-import speakerrecognition.exceptions.MfccServiceException;
 import speakerrecognition.exceptions.StatisticsServiceException;
 import speakerrecognition.pojos.GmmResult;
 import speakerrecognition.pojos.MfccParameters;
@@ -32,10 +31,10 @@ public class SpeakerModelServiceImpl implements SpeakerModelService {
 	private static final int NUM_OF_MIXTURES = 32;
 
 	@Override
-	public UserEntity creatorSpeakerModel(int frequency, double[] samples, String name, String lastName)
-			throws MfccServiceException, MatrixesServiceException, StatisticsServiceException {
+	public UserEntity creatorSpeakerModel(int frequency, double[] mfccVec, String name, String lastName)
+			throws MatrixesServiceException, StatisticsServiceException {
 
-		MfccParameters mfcc = mfccService.extractMfcc(samples, frequency);
+		MfccParameters mfcc = mfccService.transformToMatrix(mfccVec);
 		GmmResult gmm = gmmService.fit(mfcc.getMfccCoefs(), NUM_OF_MIXTURES);
 		UserEntity userEntity = new UserEntity(name, lastName);
 		matrixAssemblerService.createCovarEntity(gmm.getCovars(), userEntity);

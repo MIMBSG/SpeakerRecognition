@@ -15,7 +15,6 @@ public class UserMapper {
 		}
 		return null;
 	}
-
 	public static UserEntity map(UserTO userTO) {
 		if (userTO != null) {
 			UserEntity userEntity = new UserEntity();

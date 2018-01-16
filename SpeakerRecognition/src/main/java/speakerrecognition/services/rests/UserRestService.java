@@ -1,5 +1,7 @@
 package speakerrecognition.services.rests;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -11,9 +13,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import speakerrecognition.exceptions.MatrixesServiceException;
 import speakerrecognition.exceptions.MfccServiceException;
 import speakerrecognition.exceptions.StatisticsServiceException;
+import speakerrecognition.services.TOs.TopUsersTO;
 import speakerrecognition.services.TOs.UserTO;
 import speakerrecognition.services.interfaces.SpeakerModelService;
 import speakerrecognition.services.interfaces.SpeakerRecognitionService;
+import speakerrecognition.services.mappers.TopUsersMapper;
 import speakerrecognition.services.mappers.UserMapper;
 
 @CrossOrigin(origins = "*")
@@ -31,18 +35,18 @@ public class UserRestService {
 		this.speakerRecognitionService = speakerRecognitionService;
 	}
 
-	@RequestMapping(value = "/register/{frequency}/{samples}/{name}/{lastName}", method = RequestMethod.POST)
+	@RequestMapping(value = "/register/{frequency}/{mfccVec}/{name}/{lastName}", method = RequestMethod.POST)
 	@ResponseBody
-	public UserTO registerUser(@PathVariable int frequency, @PathVariable double[] samples, @PathVariable String name,
+	public UserTO registerUser(@PathVariable int frequency, @PathVariable double[] mfccVec, @PathVariable String name,
 			@PathVariable String lastName)
 					throws MfccServiceException, MatrixesServiceException, StatisticsServiceException {
-		return UserMapper.map(speakerModelService.creatorSpeakerModel(frequency, samples, name, lastName));
+		return UserMapper.map(speakerModelService.creatorSpeakerModel(frequency, mfccVec, name, lastName));
 	}
 
-	@RequestMapping(value = "/recognition/{frequency}/{samples}", method = RequestMethod.POST)
+	@RequestMapping(value = "/recognition/{frequency}/{mfccVec}", method = RequestMethod.POST)
 	@ResponseBody
-	public UserTO recognitionUser(@PathVariable int frequency, @PathVariable double[] samples)
+	public List<TopUsersTO> recognitionUser(@PathVariable int frequency, @PathVariable double[] mfccVec)
 			throws MfccServiceException, MatrixesServiceException, StatisticsServiceException {
-		return UserMapper.map(speakerRecognitionService.recognizing(frequency, samples));
+		return TopUsersMapper.map2TOs(speakerRecognitionService.recognizing(frequency, mfccVec));
 	}
 }
