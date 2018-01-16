@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import speakerrecognition.exceptions.MatrixesServiceException;
-import speakerrecognition.exceptions.MfccServiceException;
 import speakerrecognition.exceptions.StatisticsServiceException;
 import speakerrecognition.services.TOs.TopUsersTO;
 import speakerrecognition.services.TOs.UserTO;
@@ -39,14 +38,14 @@ public class UserRestService {
 	@ResponseBody
 	public UserTO registerUser(@PathVariable int frequency, @PathVariable double[] mfccVec, @PathVariable String name,
 			@PathVariable String lastName)
-					throws MfccServiceException, MatrixesServiceException, StatisticsServiceException {
+					throws MatrixesServiceException, StatisticsServiceException {
 		return UserMapper.map(speakerModelService.creatorSpeakerModel(frequency, mfccVec, name, lastName));
 	}
 
 	@RequestMapping(value = "/recognition/{frequency}/{mfccVec}", method = RequestMethod.POST)
 	@ResponseBody
 	public List<TopUsersTO> recognitionUser(@PathVariable int frequency, @PathVariable double[] mfccVec)
-			throws MfccServiceException, MatrixesServiceException, StatisticsServiceException {
+			throws MatrixesServiceException, StatisticsServiceException {
 		return TopUsersMapper.map2TOs(speakerRecognitionService.recognizing(frequency, mfccVec));
 	}
 }
