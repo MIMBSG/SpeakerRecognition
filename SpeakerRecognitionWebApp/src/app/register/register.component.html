@@ -1,0 +1,16 @@
+<h3 id="message">To register write name, last name and click submit.</h3>
+<div class="frame">
+  <div class="form">
+      <label>Name:</label>
+        <input [(ngModel)]="speakerModel.name" (ngModelChange)="onChangeName($event)" placeholder="Name">
+
+  </div>
+  <div>
+  <label>Last name:</label>
+    <input [(ngModel)]="speakerModel.lastName" (ngModelChange)="onChangeLastName($event)" placeholder="Last name">
+
+  </div>
+  <button (click)="done()">Done</button>
+<app-recorder [hidden]="!isSubmited"></app-recorder>
+</div>
+<app-citations></app-citations>
