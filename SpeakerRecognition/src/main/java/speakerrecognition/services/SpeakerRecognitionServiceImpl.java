@@ -32,10 +32,10 @@ public class SpeakerRecognitionServiceImpl implements SpeakerRecognitionService 
 	@Autowired
 	UserDao userDao;
 	
-	private static final double THRESHOLD = -35.0;
+	private static final double THRESHOLD = -35.3;
 	
 	@Override
-	public List<SpeakerResponse> recognizing(int frequency, double[] mfccVec)
+	public List<SpeakerResponse> recognizing(double[] mfccVec)
 			throws MatrixesServiceException, StatisticsServiceException {
 
 		MfccParameters mfcc = mfccService.transformToMatrix(mfccVec);

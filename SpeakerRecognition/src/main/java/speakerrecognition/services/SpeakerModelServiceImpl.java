@@ -31,7 +31,7 @@ public class SpeakerModelServiceImpl implements SpeakerModelService {
 	private static final int NUM_OF_MIXTURES = 32;
 
 	@Override
-	public UserEntity creatorSpeakerModel(int frequency, double[] mfccVec, String name, String lastName)
+	public UserEntity creatorSpeakerModel(double[] mfccVec, String name, String lastName)
 			throws MatrixesServiceException, StatisticsServiceException {
 
 		MfccParameters mfcc = mfccService.transformToMatrix(mfccVec);

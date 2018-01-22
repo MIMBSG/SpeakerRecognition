@@ -36,24 +36,6 @@ public class MatrixesService {
 		return vector;
 	}
 
-	/**
-	 * vector * vector = vector
-	 * 
-	 * @param primaryVector
-	 * @param secondaryVector
-	 * @return
-	 * @throws MatrixesServiceException
-	 */
-	public double[] vectorMultiplyByVector(double[] primaryVector, double[] secondaryVector)
-			throws MatrixesServiceException {
-		validateVectors(primaryVector, secondaryVector);
-		double[] vectorToReturn = new double[primaryVector.length];
-		for (int numOfCol = 0; numOfCol < primaryVector.length; numOfCol++) {
-			vectorToReturn[numOfCol] = primaryVector[numOfCol] * secondaryVector[numOfCol];
-		}
-		return vectorToReturn;
-	}
-
 	private void validateVectors(double[] primaryVector, double[] secondaryVector) throws MatrixesServiceException {
 		if (primaryVector.length != secondaryVector.length) {
 			throw new MatrixesServiceException(VECTORS_MISMATCHED);
@@ -247,40 +229,6 @@ public class MatrixesService {
 				vecOfSquares[numOfRow] += Math.pow(matrix[numOfRow][numOfCol], 2);
 		}
 		return vecOfSquares;
-	}
-
-	/**
-	 * creating matrix dimnesionXdimnesion with number of row as value of
-	 * elements
-	 * 
-	 * @param dimnesion
-	 * @return
-	 */
-	public double[][] meshgridOx(int dimnesion) {
-		double[][] matrix = new double[dimnesion][dimnesion];
-		for (int numOfCol = 0; numOfCol < dimnesion; numOfCol++) {
-			for (int numOfRow = 0; numOfRow < dimnesion; numOfRow++) {
-				matrix[numOfRow][numOfCol] = numOfRow;
-			}
-		}
-		return matrix;
-	}
-
-	/**
-	 * creating matrix dimnesionXdimnesion with number of column as value of
-	 * elements
-	 * 
-	 * @param dimnesion
-	 * @return
-	 */
-	public double[][] meshgridOy(int dimnesion) {
-		double[][] matrix = new double[dimnesion][dimnesion];
-		for (int numOfRow = 0; numOfRow < dimnesion; numOfRow++) {
-			for (int numOfCol = 0; numOfCol < dimnesion; numOfCol++) {
-				matrix[numOfRow][numOfCol] = numOfCol;
-			}
-		}
-		return matrix;
 	}
 
 	/**
@@ -572,28 +520,6 @@ public class MatrixesService {
 		if (dimnesion <= 0) {
 			throw new MatrixesServiceException(WRONG_DIMNESION);
 		}
-	}
-
-	/**
-	 * generate random matrix described by max value and his dimnesions
-	 * 
-	 * @param maxValue
-	 * @param dimnesionX
-	 * @param dimnesionY
-	 * @return
-	 * @throws MatrixesServiceException
-	 */
-	public double[][] generateRandomMatrix(double maxValue, int dimnesionX, int dimnesionY)
-			throws MatrixesServiceException {
-		validateDimnesion(dimnesionX);
-		validateDimnesion(dimnesionY);
-		double[][] matrixToReturn = new double[dimnesionX][dimnesionY];
-		for (int numOfRow = 0; numOfRow < dimnesionX; numOfRow++) {
-			for (int numOfCol = 0; numOfCol < dimnesionY; numOfCol++) {
-				matrixToReturn[numOfRow][numOfCol] = Math.random() * maxValue;
-			}
-		}
-		return matrixToReturn;
 	}
 
 	/**
@@ -981,42 +907,6 @@ public class MatrixesService {
 					maxValues[numOfCol] = matrix[numOfRow][numOfCol];
 		}
 		return maxValues;
-	}
-
-	/**
-	 * maximum values in row of matrix
-	 * 
-	 * @param matrix
-	 * @return
-	 */
-	public double[] maxInRow(double[][] matrix) {
-		int rows = matrix.length;
-		double maxValues[] = new double[rows];
-
-		for (int numOfRow = 0; numOfRow < rows; numOfRow++) {
-			maxValues[numOfRow] = Double.NEGATIVE_INFINITY;
-		} // JAK CO TO USUNĄĆ!!!
-
-		for (int numOfRow = 0; numOfRow < rows; numOfRow++) {
-			int cols = matrix[0].length;
-			for (int numOfCol = 0; numOfCol < cols; numOfCol++)
-				if (maxValues[numOfRow] < matrix[numOfRow][numOfCol])
-					maxValues[numOfRow] = matrix[numOfRow][numOfCol];
-		}
-		return maxValues;
-	}
-
-	/**
-	 * creating matrix fulled of elements with value = 1
-	 * 
-	 * @param dimnesion
-	 * @return
-	 */
-	public double[][] eye(int dimnesion) {
-		double[][] matrixToReturn = new double[dimnesion][dimnesion];
-		for (int numOfEl = 0; numOfEl < dimnesion; numOfEl++)
-			matrixToReturn[numOfEl][numOfEl] = 1;
-		return matrixToReturn;
 	}
 
 	/**

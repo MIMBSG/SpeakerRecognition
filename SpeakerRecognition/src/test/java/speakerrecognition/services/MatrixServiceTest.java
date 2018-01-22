@@ -91,29 +91,6 @@ public class MatrixServiceTest {
 	}
 
 	@Test
-	public void shouldMultiplyVectorByVectorElByEl() throws MatrixesServiceException {
-		// given
-		double[] primaryVector = { 3.0, 4.0, 7.0 };
-		double[] secondaryVector = { 2.0, -3.0, 8.0 };
-		// when
-		double[] expectedVector = { 6.0, -12.0, 56.0 };
-		double[] returnedVector = matrixesService.vectorMultiplyByVector(primaryVector, secondaryVector);
-		// then
-		Assert.assertArrayEquals(expectedVector, returnedVector, 0.0);
-	}
-
-	@Test(expected = MatrixesServiceException.class)
-	public void shouldFailByWrongVectorDimnesion() throws MatrixesServiceException {
-		// given
-		double[] primaryVector = { 3.0, 4.0, 7.0 };
-		double[] secondaryVector = { 2.0, -3.0 };
-		// when
-		matrixesService.vectorMultiplyByVector(primaryVector, secondaryVector);
-		// then
-		Assert.fail();
-	}
-
-	@Test
 	public void shouldAddVectorToVectorElByEl() throws MatrixesServiceException {
 		// given
 		double[] primaryVector = { 3.0, 4.0, 7.0 };
@@ -376,33 +353,7 @@ public class MatrixServiceTest {
 		// then
 		Assert.assertEquals(expectedSumOfSquares, returnedSumOfSquares, 0.0);
 	}
-
-	@Test
-	public void shouldGetMeshgridedMatrixInOx() {
-		// given
-		int dimnesion = 3;
-		// when
-		double[][] expectedMatrix = { { 0, 0, 0 }, { 1, 1, 1 }, { 2, 2, 2 } };
-		double[][] returnedMatrix = matrixesService.meshgridOx(dimnesion);
-		// then
-		for (int numOfRow = 0; numOfRow < dimnesion; numOfRow++) {
-			Assert.assertArrayEquals(expectedMatrix[numOfRow], returnedMatrix[numOfRow], 0.0);
-		}
-	}
-
-	@Test
-	public void shouldGetMeshgridedMatrixInOy() {
-		// given
-		int dimnesion = 3;
-		// when
-		double[][] expectedMatrix = { { 0, 1, 2 }, { 0, 1, 2 }, { 0, 1, 2 } };
-		double[][] returnedMatrix = matrixesService.meshgridOy(dimnesion);
-		// then
-		for (int numOfRow = 0; numOfRow < dimnesion; numOfRow++) {
-			Assert.assertArrayEquals(expectedMatrix[numOfRow], returnedMatrix[numOfRow], 0.0);
-		}
-	}
-
+	
 	@Test
 	public void shouldTransponseMatrix() {
 		// given
@@ -453,24 +404,7 @@ public class MatrixServiceTest {
 		// then
 		Assert.fail();
 	}
-
-	@Test
-	public void shouldGenerateRandomMatrix() throws MatrixesServiceException {
-		// given
-		double maxValue = 5.0;
-		int dimnesionX = 2;
-		int dimnesionY = 3;
-		// when
-		double[][] expectedMatrix = { { maxValue, maxValue, maxValue }, { maxValue, maxValue, maxValue } };
-		double[][] returnedMatrix = matrixesService.generateRandomMatrix(maxValue, dimnesionX, dimnesionY);
-		// then
-		for (int numOfRow = 0; numOfRow < dimnesionX; numOfRow++) {
-			for (int numOfCol = 0; numOfCol < dimnesionY; numOfCol++) {
-				assertTrue(expectedMatrix[numOfRow][numOfCol] > returnedMatrix[numOfRow][numOfCol]);
-			}
-		}
-	}
-
+	
 	@Test
 	public void shouldReturnSelectedRow() throws MatrixesServiceException {
 		// given
@@ -606,19 +540,6 @@ public class MatrixServiceTest {
 	}
 
 	@Test
-	public void shouldMakeEyeMatrix() throws MatrixesServiceException {
-		// given
-		int dimnesion = 2;
-		// when
-		double[][] expectedMatrix = { { 1, 0 }, { 0, 1 } };
-		double[][] returnedMatrix = matrixesService.eye(dimnesion);
-		// then
-		for (int numOfRow = 0; numOfRow < dimnesion; numOfRow++) {
-			Assert.assertArrayEquals(expectedMatrix[numOfRow], returnedMatrix[numOfRow], 0.0);
-		}
-	}
-
-	@Test
 	public void shouldMakeEyeMatrixWithCoef() throws MatrixesServiceException {
 		// given
 		int dimnesion = 2;
@@ -716,17 +637,6 @@ public class MatrixServiceTest {
 		// when
 		double[] expectedVector = { 1.0, 6.0 };
 		double[] returnedVector = matrixesService.sumsOfElementsInCols(matrix);
-		// then
-		Assert.assertArrayEquals(expectedVector, returnedVector, 0.0);
-	}
-
-	@Test
-	public void shouldReturnMaxValuesInRow() {
-		// given
-		double[][] matrix = { { 0.0, 5.0 }, { 1.0, 1.0 } };
-		// when
-		double[] expectedVector = { 5.0, 1.0 };
-		double[] returnedVector = matrixesService.maxInRow(matrix);
 		// then
 		Assert.assertArrayEquals(expectedVector, returnedVector, 0.0);
 	}

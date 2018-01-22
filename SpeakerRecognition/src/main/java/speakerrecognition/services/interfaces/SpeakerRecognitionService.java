@@ -8,6 +8,6 @@ import speakerrecognition.pojos.SpeakerResponse;
 
 public interface SpeakerRecognitionService {
 
-	List<SpeakerResponse> recognizing(int frequency, double[] mfccVec)
+	List<SpeakerResponse> recognizing(double[] mfccVec)
 			throws MatrixesServiceException, StatisticsServiceException;
 }

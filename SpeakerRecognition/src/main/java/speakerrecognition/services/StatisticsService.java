@@ -93,37 +93,6 @@ public class StatisticsService {
 		return temp;
 	}
 
-	/**
-	 * standard deviation of a vector
-	 * 
-	 * @param data[]
-	 * @return data
-	 * @throws StatisticsServiceException
-	 */
-	public double getStdDev(double[] data) throws StatisticsServiceException {
-		nullPointerCheckVector(data);
-		return Math.sqrt(getVariance(data));
-	}
-
-	/**
-	 * vector of standard deviations from a matrix which consists of vectors
-	 * 
-	 * @param data[][]
-	 * @return data[]
-	 * @throws StatisticsServiceException
-	 */
-	public double[] getStdDev2(double[][] data) throws StatisticsServiceException {
-		nullPointerCheckMatrix(data);
-		checkMatrixRows(data);
-		int numOfRows = data.length;
-		double[] temp = getVariance2(data);
-		for (int i = 0; i < numOfRows; i++) {
-			temp[i] = Math.sqrt(temp[i]);
-		}
-		return temp;
-
-	}
-
 	private void nullPointerCheckMatrix(double[][] data) throws StatisticsServiceException {
 		if (data == null) {
 			throw new StatisticsServiceException(NULL_POINTER_ERROR);
@@ -147,8 +116,6 @@ public class StatisticsService {
 			} else {
 				if (testLength != temp.length) {
 					throw new StatisticsServiceException(WRONG_MATRIX_SIZE_ERROR);
-				} else {
-					;// nie ma tu nic ciekawego
 				}
 			}
 		}

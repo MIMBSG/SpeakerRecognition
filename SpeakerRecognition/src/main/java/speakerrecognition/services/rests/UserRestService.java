@@ -34,18 +34,18 @@ public class UserRestService {
 		this.speakerRecognitionService = speakerRecognitionService;
 	}
 
-	@RequestMapping(value = "/register/{frequency}/{mfccVec}/{name}/{lastName}", method = RequestMethod.POST)
+	@RequestMapping(value = "/register/{mfccVec}/{name}/{lastName}", method = RequestMethod.POST)
 	@ResponseBody
-	public UserTO registerUser(@PathVariable int frequency, @PathVariable double[] mfccVec, @PathVariable String name,
+	public UserTO registerUser(@PathVariable double[] mfccVec, @PathVariable String name,
 			@PathVariable String lastName)
 					throws MatrixesServiceException, StatisticsServiceException {
-		return UserMapper.map(speakerModelService.creatorSpeakerModel(frequency, mfccVec, name, lastName));
+		return UserMapper.map(speakerModelService.creatorSpeakerModel(mfccVec, name, lastName));
 	}
 
-	@RequestMapping(value = "/recognition/{frequency}/{mfccVec}", method = RequestMethod.POST)
+	@RequestMapping(value = "/recognition/{mfccVec}/", method = RequestMethod.POST)
 	@ResponseBody
-	public List<TopUsersTO> recognitionUser(@PathVariable int frequency, @PathVariable double[] mfccVec)
+	public List<TopUsersTO> recognitionUser(@PathVariable double[] mfccVec)
 			throws MatrixesServiceException, StatisticsServiceException {
-		return TopUsersMapper.map2TOs(speakerRecognitionService.recognizing(frequency, mfccVec));
+		return TopUsersMapper.map2TOs(speakerRecognitionService.recognizing(mfccVec));
 	}
 }

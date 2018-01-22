@@ -84,28 +84,6 @@ public class StatisticsServiceTest {
 		Assert.assertArrayEquals(expectedAvg, returnedAvg, 0.0001);
 	}
 
-	@Test
-	public void SuccessGetStdDev() throws StatisticsServiceException {
-		// given
-		double[] data = { 3.0, 2.0, 3.0, 4.0 };
-		// when
-		double expectedStddDev = 0.8165;
-		double returnedStdDev = statserv.getStdDev(data);
-		// then
-		Assert.assertEquals(expectedStddDev, returnedStdDev, 0.0001);
-	}
-
-	@Test
-	public void SuccessGetStdDev2() throws StatisticsServiceException {
-		// given
-		double[][] data = { { 3.0, 2.0, 3.0, 4.0 }, { 30.0, 20.0, 30.0, 4.0 }, { 1.5, 2.0, 2.5, 4.0 } };
-		// when
-		double[] expectedStdDev = { 13.0958, 8.4852, 12.8473, 0.0 };
-		double[] returnedStdDev = statserv.getStdDev2(data);
-		// then
-		Assert.assertArrayEquals(expectedStdDev, returnedStdDev, 0.0001);
-	}
-
 	@Test(expected = StatisticsServiceException.class)
 	public void WrongMatrixSizeGetStdDev2() throws StatisticsServiceException {
 		// given
