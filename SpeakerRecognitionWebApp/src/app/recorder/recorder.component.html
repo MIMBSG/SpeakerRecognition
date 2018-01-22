@@ -1,0 +1,10 @@
+<div>
+		<h2>Voice recording:</h2>
+		<p>
+			<button [disabled]="isRecording" (click)="record()">Start</button>
+			<button [disabled]="!isRecording" (click)="stop()">Stop</button>
+		</p>
+</div>
+<div>
+		<h2 id=message></h2>
+</div>

@@ -1,0 +1,50 @@
+.nameL{
+  padding-left: 28px;
+}
+.form{
+  margin-top: 20px;
+}
+button{
+  background-color: #82b8ff;
+  border: solid black 2px;
+  color: black;
+  border-radius: 45px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  padding: 10px 15px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+}
+
+button:hover{
+  background-color: white;
+  border: solid black 2px;
+  color: black;
+  border-radius: 45px;
+  padding: 10px 15px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+}
+.frame{
+  background-color: #244a87;
+  border-radius: 15px;
+  margin-left: 40%;
+  width: 20%;
+  border: solid black 2px;
+}
+input{
+  width:40%;
+}
+label{
+  width:30%;
+  margin-left: 10%;
+  color: white;
+  text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+  font-size: 18px;
+  float: left;
+  text-align: left;
+}

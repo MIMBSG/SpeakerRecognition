@@ -1,0 +1,29 @@
+
+h2 {
+  font-style: italic;
+  text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+  color: lightblue;
+}
+button{
+  background-color: #82b8ff;
+  border: solid black 2px;
+  color: black;
+  border-radius: 45px;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+}
+
+button:hover{
+  background-color: white;
+  border: solid black 2px;
+  color: black;
+  border-radius: 45px;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+}
