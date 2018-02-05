@@ -1,0 +1,45 @@
+CREATE SCHEMA `SpeakerModels` ;
+CREATE TABLE `SpeakerModels`.`users` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(45) NULL,
+  `last_name` VARCHAR(45) NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC));
+CREATE TABLE `SpeakerModels`.`weight` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `vec_index` INT NULL,
+  `value` DOUBLE NULL,
+  `user` INT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `userIdW_idx` (`user` ASC),
+  CONSTRAINT `userIdW`
+    FOREIGN KEY (`user`)
+    REFERENCES `SpeakerModels`.`users` (`id`)
+    ON DELETE RESTRICT
+    ON UPDATE RESTRICT);
+ CREATE TABLE `SpeakerModels`.`mean` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `row_index` INT NULL,
+  `column_index` INT NULL,
+  `value` DOUBLE NULL,
+  `user` INT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `userIdM_idx` (`user` ASC),
+  CONSTRAINT `userIdM`
+    FOREIGN KEY (`user`)
+    REFERENCES `SpeakerModels`.`users` (`id`)
+    ON DELETE RESTRICT
+    ON UPDATE RESTRICT);
+CREATE TABLE `SpeakerModels`.`covar` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `row_index` INT NULL,
+  `column_index` INT NULL,
+  `value` DOUBLE NULL,
+  `user` INT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `userIdC_idx` (`user` ASC),
+  CONSTRAINT `userIdC`
+    FOREIGN KEY (`user`)
+    REFERENCES `SpeakerModels`.`users` (`id`)
+    ON DELETE RESTRICT
+    ON UPDATE RESTRICT);
